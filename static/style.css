@@ -920,3 +920,62 @@ input:checked + .slider:before {
 #allTimeStatsList p {
     margin: 6px 0;
 }
+/* Увеличиваем размер ячеек календаря */
+.day {
+    width: 80px !important;      /* или min-width: 80px; */
+    height: 110px !important;
+    padding: 12px !important;
+}
+
+/* Число дня и эмодзи чуть больше */
+.day .day-number {
+    font-size: 1.4rem !important;
+}
+
+.day .emoji {
+    font-size: 2.2rem !important;
+    margin-top: 6px !important;
+}
+
+/* Кнопки формы настроения больше */
+.mood-form .emoji-buttons button {
+    font-size: 28px !important;
+    padding: 14px !important;
+    margin: 0 5px !important;
+}
+
+.comment-buttons button {
+    padding: 10px 16px !important;
+    font-size: 16px !important;
+}
+
+.comment-input {
+    font-size: 16px !important;
+    padding: 8px !important;
+}
+.mood-bar {
+    height: 16px !important;          /* чуть уже и ниже */
+    border-radius: 8px !important;
+    max-width: 100%;                  /* не больше ширины контейнера */
+    margin: 15px auto !important;
+    width: 90vw;                      /* адаптивная ширина — 90% от ширины экрана */
+    box-sizing: border-box;
+}
+
+.mood-fill {
+    height: 100% !important;
+    transition: width 0.3s ease;
+}
+
+.mood-percentage {
+    font-size: 14px !important;       /* чуть меньше шрифт */
+    font-weight: 600 !important;
+    margin-bottom: 12px !important;
+    color: var(--text);
+    width: 90vw;                      /* совпадает с шириной полосы */
+    max-width: 400px;                 /* максимум — 400px */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
