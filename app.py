@@ -12,7 +12,7 @@ def start(update, context):
     keyboard = [
         [InlineKeyboardButton(
             "Открыть Календарь настроения",
-            web_app=WebAppInfo(url="https://1234abcd.ngrok.io/"))]
+            web_app=WebAppInfo(url="https://calendar-nr7j.onrender.com"))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Привет! Нажми кнопку, чтобы открыть мини-приложение:', reply_markup=reply_markup)
