@@ -953,29 +953,35 @@ input:checked + .slider:before {
     font-size: 16px !important;
     padding: 8px !important;
 }
+/* Уменьшаем высоту и ширину полосы, делаем адаптивной */
 .mood-bar {
-    height: 16px !important;          /* чуть уже и ниже */
-    border-radius: 8px !important;
-    max-width: 100%;                  /* не больше ширины контейнера */
-    margin: 15px auto !important;
-    width: 90vw;                      /* адаптивная ширина — 90% от ширины экрана */
-    box-sizing: border-box;
+    max-width: 600px;   /* максимум ширины */
+    width: 90vw;        /* адаптивно - 90% ширины экрана */
+    height: 14px;       /* чуть ниже */
+    border-radius: 8px;
+    margin: 15px auto;
+    background-color: var(--bar-bg);
+    overflow: hidden;
 }
 
+/* Заливка полосы — по высоте 100% */
 .mood-fill {
-    height: 100% !important;
+    height: 100%;
+    background-color: var(--bar-fill);
+    width: 0;
     transition: width 0.3s ease;
 }
 
+/* Текст с процентом — чуть меньше и тоже адаптивно */
 .mood-percentage {
-    font-size: 14px !important;       /* чуть меньше шрифт */
-    font-weight: 600 !important;
-    margin-bottom: 12px !important;
-    color: var(--text);
-    width: 90vw;                      /* совпадает с шириной полосы */
-    max-width: 400px;                 /* максимум — 400px */
+    max-width: 600px;
+    width: 90vw;
+    margin: 0 auto 15px;
+    font-weight: 600;
+    font-size: 16px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    box-sizing: border-box;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
