@@ -985,49 +985,125 @@ input:checked + .slider:before {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-/* Увеличим кнопки навигации по месяцам на мобильных устройствах */
 @media (max-width: 600px) {
+  /* Увеличиваем кнопки навигации */
   .month-navigation button {
-    padding: 12px 20px;
-    font-size: 1.2rem;
-    margin: 0 10px;
+    padding: 14px 24px !important;
+    font-size: 1.3rem !important;
+    margin: 0 12px !important;
   }
-}
 
-/* Сделаем шкалу настроения уже и немного ниже на мобилках */
-@media (max-width: 600px) {
+  /* Уменьшаем и сужаем шкалу */
   .mood-bar {
-    width: 80vw;      /* чуть уже */
-    height: 10px;     /* ниже высота */
-    border-radius: 6px;
+    width: 80vw !important;
+    height: 10px !important;
+    border-radius: 6px !important;
   }
-  .mood-fill {
-    transition: width 0.3s ease;
+
+  /* Переключатель темы */
+  .theme-toggle {
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    top: 10px !important;
+    font-size: 16px !important;
+    gap: 6px !important;
+  }
+
+  /* Меню гамбургер */
+  #menuToggle {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 10px !important;
+    font-size: 22px !important;
+  }
+
+  /* Панель меню */
+  #menuPanel {
+    top: 50px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90vw !important;
+    max-width: 400px !important;
   }
 }
+@media (max-width: 480px) {
+    body {
+        font-size: 16px;
+        padding: 0 8px;
+    }
 
-/* Сдвинем переключатель темы и меню гамбургер ближе к центру на мобильных */
-@media (max-width: 600px) {
-  .theme-toggle {
-    right: 50%;
-    transform: translateX(50%);
-    top: 10px;
-    font-size: 16px;
-    gap: 6px;
-  }
+    h1 {
+        font-size: 1.4em;
+    }
 
-  #menuToggle {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 10px;
-    font-size: 22px;
-  }
+    .calendar {
+        gap: 6px;
+    }
 
-  #menuPanel {
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90vw;
-    max-width: 400px;
-  }
+    .day {
+        padding: 12px 6px;
+        font-size: 1em;
+    }
+
+    .day-number {
+        font-size: 1.1em;
+    }
+
+    .emoji {
+        font-size: 1.5em;
+    }
+
+    .mood-form {
+        font-size: 0.95em;
+    }
+
+    .comment-input {
+        font-size: 0.95em;
+    }
+
+    .comment-buttons button {
+        font-size: 0.95em;
+        padding: 6px 8px;
+    }
+
+    .emoji-buttons button {
+        font-size: 1.4em;
+    }
+
+    .mood-bar {
+        height: 16px;
+    }
+
+    .mood-percentage {
+        font-size: 1em;
+        margin-bottom: 12px;
+    }
+
+    #clearAllBtn {
+        font-size: 0.95em;
+        padding: 8px 12px;
+    }
+
+    .theme-toggle {
+        font-size: 1.2em;
+    }
+
+    #menuToggle {
+        font-size: 26px;
+        top: 12px;
+        left: 12px;
+    }
+
+    #menuPanel {
+        width: 92vw;
+        max-height: 70vh;
+        left: 4vw;
+        top: 50px;
+        font-size: 0.95em;
+    }
+
+    .tabBtn {
+        padding: 8px 6px;
+        font-size: 0.9em;
+    }
 }
