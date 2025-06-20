@@ -262,23 +262,8 @@
     function toggleForm(dayDiv) {
         document.querySelectorAll('.mood-form').forEach(f => f.classList.add('hidden'));
         const form = dayDiv.querySelector('.mood-form');
-        if (form) {
-            form.classList.remove('hidden');
-
-            // Автоматически сместить, если выходит за пределы экрана
-            const rect = form.getBoundingClientRect();
-            const screenW = window.innerWidth;
-
-            if (rect.right > screenW) {
-                form.style.left = 'auto';
-                form.style.right = '0';
-            } else {
-                form.style.left = '0';
-                form.style.right = 'auto';
-            }
-        }
+        if (form) form.classList.remove('hidden');
     }
-
 
     function submitMood(button, date, mood) {
         const dayDiv = button.closest('.day');
