@@ -1246,3 +1246,48 @@ input:checked + .slider:before {
     gap: 5px;
   }
 }
+/* Фикс формы внутри ячеек */
+.day {
+    position: relative;
+    overflow: visible;
+}
+
+.mood-form {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.6);
+    z-index: 10;
+    width: max-content;
+    max-width: 90vw;
+}
+
+/* На мобилках — отрисовывать снизу вверх, внутри блока */
+@media (max-width: 480px) {
+    .mood-form {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%);
+    }
+
+    .theme-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 350px;
+        margin: 10px auto;
+        font-size: 1.2em;
+    }
+
+    h1 {
+        font-size: 1.1em;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+}
