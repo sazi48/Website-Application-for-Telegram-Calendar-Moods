@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <title>Календарь настроения</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+      /* Стили для меню гамбургер */
+        #menuToggle {
+            cursor: pointer;
+            font-size: 24px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            user-select: none;
+            color: var(--text);
+        }
+        #menuPanel {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 10px;
+            background: var(--bg);
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 420px;
+            max-height: 550px;
+            overflow-y: auto;
+            padding: 10px;
+            z-index: 1000;
+            color: var(--text);
+        }
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .tabBtn {
+            flex: 1;
+            padding: 6px 10px;
+            background: #555;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            user-select: none;
+        }
+        .tabBtn.active,
+        .tabBtn:hover {
+            background-color: var(--bar-fill);
+            color: white;
+        }
+        .tabContent {
+            display: none;
+        }
+        .tabContent.active {
+            display: block;
+        }
+        #commentsList, #allTimeStatsList {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        /* Немного отступов в списках */
+        #allTimeStatsList p {
+            margin: 6px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" style="text-align: center; margin: 15px 0;">
+      <span class="moon" style="font-size: 1.3em;">🌙</span>
+      <label class="switch" style="margin: 0 8px;">
+        <input type="checkbox" id="themeSwitch">
+        <span class="slider round"></span>
+      </label>
+      <span class="sun" style="font-size: 1.3em;">☀</span>
+    </div>
+
+    <!-- Кнопка гамбургер -->
+    <div id="menuToggle">&#9776;</div>
+
+    <!-- Панель меню -->
+    <div id="menuPanel" style="display:none;">
+      <div class="tabs">
+        <button class="tabBtn active" data-tab="counts">Количество дней</button>
+        <button class="tabBtn" data-tab="comments">Комментарии</button>
+        <button class="tabBtn" data-tab="allTimeStats">Статистика за всё время</button>
+      </div>
+
+      <div class="tabContent active" id="counts">
+        <p>Счастливых дней: <span id="countHappy">0</span></p>
+        <p>Нейтральных дней: <span id="countNeutral">0</span></p>
+        <p>Грустных дней: <span id="countSad">0</span></p>
+      </div>
+      <div class="tabContent" id="comments" style="max-height: 400px; overflow-y: auto;">
+        <ul id="commentsList"></ul>
+      </div>
+      <div class="tabContent" id="allTimeStats" style="max-height: 400px; overflow-y: auto;">
+        <p>Счастливых дней всего: <span id="allTimeHappy">0</span></p>
+        <p>Нейтральных дней всего: <span id="allTimeNeutral">0</span></p>
+        <p>Грустных дней всего: <span id="allTimeSad">0</span></p>
+        <p>Всего дней с настроением: <span id="allTimeTotal">0</span></p>
+        <div id="allTimeCommentsContainer" style="max-height: 200px; overflow-y: auto; margin-top: 10px; border-top: 1px solid #666; padding-top: 8px;">
+          <h4 style="margin: 0 0 6px 0;">Все комментарии за всё время:</h4>
+          <ul id="allTimeCommentsList" style="list-style: disc; padding-left: 20px; margin: 0; color: var(--text);"></ul>
+        </div>
+      </div>
+    </div>
+
+    <h1 style="text-align:center;">Календарь — <span id="localMonthYear"></span></h1>
+    <div class="month-navigation" style="text-align: center; margin-bottom: 15px;">
+      <button id="prevMonthBtn">← Предыдущий</button>
+      <button id="nextMonthBtn">Следующий →</button>
+    </div>
+
+    <div class="mood-bar">
+        <div id="moodFill" class="mood-fill" style="width: 0%;"></div>
+    </div>
+    <p id="moodPercentage" class="mood-percentage">Общее настроение: 0%</p>
+
+    <button id="clearAllBtn" type="button">Отчистить все настроения</button>
+
+    <div class="calendar" id="calendarContainer" style="max-width: 400px; margin: 0 auto; user-select:none;">
+        <!-- Календарь будет отрисован сюда через JS -->
+    </div>
+
+<script>
+    function pad(n) {
+        return n < 10 ? '0' + n : n;
+    }
+
+    let currentYear, currentMonth;
+    const userId = "default_user"; // если есть динамический user_id — подставь его здесь
+
+    function renderCalendar(data) {
+        const container = document.getElementById('calendarContainer');
+        container.innerHTML = '';
+
+        // Обновляем все комментарии за всё время
+        const allTimeCommentsList = document.getElementById('allTimeCommentsList');
+        allTimeCommentsList.innerHTML = '';
+        if(data.comments && data.comments.length > 0) {
+          data.comments.forEach(({date, comment}) => {
+            if(comment.trim()) {
+              const li = document.createElement('li');
+              li.textContent = `${date} - ${comment}`;
+              allTimeCommentsList.appendChild(li);
+            }
+          });
+        } else {
+          const li = document.createElement('li');
+          li.textContent = 'Комментариев пока нет.';
+          allTimeCommentsList.appendChild(li);
+        }
+
+        data.days.forEach(dayObj => {
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day');
+            if(dayObj.mood) dayDiv.classList.add(dayObj.mood);
+            dayDiv.setAttribute('data-date', dayObj.date_str);
+            dayDiv.onclick = () => toggleForm(dayDiv);
+
+            const safeComment = dayObj.comment ? dayObj.comment.replace(/"/g, '&quot;').replace(/'/g, '&#39;') : '';
+
+            dayDiv.innerHTML = `
+                <span class="day-number">${dayObj.day}</span>
+                <span class="emoji">${dayObj.mood === 'happy' ? '😊' : dayObj.mood === 'neutral' ? '😐' : dayObj.mood === 'sad' ? '😢' : ''}</span>
+                <div class="mood-form hidden" onclick="event.stopPropagation()">
+                    <input type="text" class="comment-input" placeholder="Комментарий (необязательно)" value="${safeComment}" onkeydown="if(event.key === 'Enter'){ event.preventDefault(); submitComment(this); }" />
+                    <div class="comment-buttons">
+                        <button type="button" onclick="submitComment(this)">Сохранить</button>
+                    </div>
+                    <div class="emoji-buttons">
+                        <button type="button" class="happy" onclick="submitMood(this, '${dayObj.date_str}', 'happy')">😊</button>
+                        <button type="button" class="neutral" onclick="submitMood(this, '${dayObj.date_str}', 'neutral')">😐</button>
+                        <button type="button" class="sad" onclick="submitMood(this, '${dayObj.date_str}', 'sad')">😢</button>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(dayDiv);
+        });
+
+        const moodFill = document.getElementById('moodFill');
+        const moodPercentage = document.getElementById('moodPercentage');
+        moodFill.style.width = data.mood_level + '%';
+        moodPercentage.textContent = 'Общее настроение: ' + data.mood_level + '%';
+
+        document.getElementById('localMonthYear').textContent = `${pad(data.month)}/${data.year}`;
+
+        currentYear = data.year;
+        currentMonth = data.month;
+
+        let happyCount = 0, neutralCount = 0, sadCount = 0;
+        data.days.forEach(day => {
+          if(day.mood === 'happy') happyCount++;
+          else if(day.mood === 'neutral') neutralCount++;
+          else if(day.mood === 'sad') sadCount++;
+        });
+        document.getElementById('countHappy').textContent = happyCount;
+        document.getElementById('countNeutral').textContent = neutralCount;
+        document.getElementById('countSad').textContent = sadCount;
+
+        const commentsList = document.getElementById('commentsList');
+        commentsList.innerHTML = '';
+        data.comments.forEach(({date, comment}) => {
+          if(comment.trim()) {
+            const li = document.createElement('li');
+            li.textContent = `${date} — ${comment}`;
+            commentsList.appendChild(li);
+          }
+        });
+
+        if (data.all_time_stats) {
+          document.getElementById('allTimeHappy').textContent = data.all_time_stats.happy || 0;
+          document.getElementById('allTimeNeutral').textContent = data.all_time_stats.neutral || 0;
+          document.getElementById('allTimeSad').textContent = data.all_time_stats.sad || 0;
+          document.getElementById('allTimeTotal').textContent = data.all_time_stats.total || 0;
+        } else {
+          document.getElementById('allTimeHappy').textContent = '0';
+          document.getElementById('allTimeNeutral').textContent = '0';
+          document.getElementById('allTimeSad').textContent = '0';
+          document.getElementById('allTimeTotal').textContent = '0';
+        }
+    }
+
+    function fetchCalendar(year, month) {
+        fetch(`/get_calendar_data?year=${year}&month=${month}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.error) {
+                alert(data.error);
+                return;
+            }
+            renderCalendar(data);
+        })
+        .catch(() => alert('Ошибка при загрузке данных календаря'));
+    }
+
+    function changeMonth(delta) {
+        let newMonth = currentMonth + delta;
+        let newYear = currentYear;
+
+        if(newMonth < 1) {
+            newMonth = 12;
+            newYear--;
+        } else if(newMonth > 12) {
+            newMonth = 1;
+            newYear++;
+        }
+
+        fetchCalendar(newYear, newMonth);
+    }
+
+    document.getElementById('prevMonthBtn').addEventListener('click', () => changeMonth(-1));
+    document.getElementById('nextMonthBtn').addEventListener('click', () => changeMonth(1));
+
+    function toggleForm(dayDiv) {
+        document.querySelectorAll('.mood-form').forEach(f => f.classList.add('hidden'));
+        const form = dayDiv.querySelector('.mood-form');
+        if (form) form.classList.remove('hidden');
+    }
+
+    function submitMood(button, date, mood) {
+        const dayDiv = button.closest('.day');
+        const comment = dayDiv.querySelector('.comment-input').value;
+
+        fetch('/submit_mood', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                date: date,
+                mood: mood,
+                comment: comment,
+                user_id: userId
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                fetchCalendar(currentYear, currentMonth);
+            } else {
+                alert('Ошибка при сохранении настроения');
+            }
+        })
+        .catch(() => alert('Ошибка сети при сохранении настроения'));
+    }
+
+    function submitComment(buttonOrInput) {
+        const dayDiv = buttonOrInput.closest('.day');
+        const dateStr = dayDiv.getAttribute('data-date');
+        const commentInput = dayDiv.querySelector('.comment-input');
+        const comment = commentInput.value;
+
+        let mood = '';
+        ['happy', 'neutral', 'sad'].forEach(c => {
+            if (dayDiv.classList.contains(c)) mood = c;
+        });
+
+        fetch('/submit_mood', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                date: dateStr,
+                mood: mood,
+                comment: comment,
+                user_id: userId
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                fetchCalendar(currentYear, currentMonth);
+            } else {
+                alert('Ошибка при сохранении комментария');
+            }
+        })
+        .catch(() => alert('Ошибка сети при сохранении комментария'));
+    }
+
+    document.getElementById('clearAllBtn').addEventListener('click', () => {
+        if (!confirm('Вы уверены, что хотите очистить все настроения?')) return;
+
+        fetch('/clear_all_moods', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ user_id: userId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                fetchCalendar(currentYear, currentMonth);
+                alert('Все настроения успешно очищены!');
+            } else {
+                alert('Ошибка при удалении: ' + (data.message || 'Неизвестно'));
+            }
+        })
+        .catch(() => alert('Ошибка сети при очистке настроений'));
+    });
+
+    // Переключение темы с сохранением в localStorage
+    const toggle = document.getElementById('themeSwitch');
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        toggle.checked = (theme === 'light');
+    }
+
+    // Инициализация темы при загрузке страницы
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+
+        // Загружаем календарь текущего месяца
+        const now = new Date();
+        fetchCalendar(now.getFullYear(), now.getMonth() + 1);
+    });
+
+    toggle.addEventListener('change', () => {
+        const newTheme = toggle.checked ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    // Логика меню гамбургер и вкладок
+    const menuToggle = document.getElementById('menuToggle');
+    const menuPanel = document.getElementById('menuPanel');
+    const tabButtons = document.querySelectorAll('.tabBtn');
+    const tabContents = document.querySelectorAll('.tabContent');
+
+    menuToggle.onclick = () => {
+        menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block';
+    }
+
+    tabButtons.forEach(btn => {
+        btn.onclick = () => {
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        }
+    });
+</script>
+
+</body>
+</html>

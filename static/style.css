@@ -1,0 +1,922 @@
+:root {
+    --bg: #111;
+    --text: #fff;
+    --happy: #2ecc71;
+    --neutral: #f1c40f;
+    --sad: #e74c3c;
+    --bar-bg: #333;
+    --bar-fill: #2ecc71;
+}
+body {
+    ...
+    color: var(--text);
+}
+
+[data-theme="light"] {
+    --bg: #fff;
+    --text: #000;
+    --bar-bg: #eee;
+    --bar-fill: #27ae60;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.day {
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    min-height: 70px;
+}
+
+.day.happy {
+    background-color: var(--happy);
+}
+.day.neutral {
+    background-color: var(--neutral);
+}
+.day.sad {
+    background-color: var(--sad);
+}
+
+.mood-bar {
+    background-color: var(--bar-bg);
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.mood-fill {
+    height: 100%;
+    background-color: var(--bar-fill);
+    width: 0;
+    transition: 0.5s;
+}
+
+.mood-percentage {
+    margin: 0 0 20px;
+}
+
+.mood-form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"], input[type="date"], select {
+    padding: 6px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: var(--bar-fill);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.hidden {
+    display: none;
+}
+
+.day .mood-form {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.day .emoji-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day .emoji-buttons button {
+    font-size: 20px;
+    padding: 6px 10px;
+    flex: 1;
+    margin: 0 2px;
+}
+.hidden {
+    display: none;
+}
+
+.day .mood-form {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.day .emoji-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day .emoji-buttons button {
+    font-size: 18px;
+    padding: 6px;
+    flex: 1;
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.comment-list {
+    margin-top: 30px;
+    padding-left: 20px;
+    color: var(--text);
+}
+
+.comment-list li {
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+.hidden {
+    display: none;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.day {
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 80px;
+    position: relative;
+    cursor: pointer;
+}
+
+.day .emoji {
+    display: block;
+    font-size: 20px;
+    margin-top: 4px;
+}
+
+.day .mood-form {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.day .emoji-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day .emoji-buttons button {
+    flex: 1;
+    margin: 0 2px;
+    font-size: 18px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.comment-list {
+    margin-top: 30px;
+    padding-left: 20px;
+}
+
+.comment-list li {
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+.comment-buttons {
+    margin-bottom: 8px;
+}
+
+.comment-buttons button {
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--bar-fill);
+    color: white;
+}
+.day .mood-form {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.comment-input {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    min-width: 0; /* чтобы flex корректно сжимался */
+}
+
+.comment-buttons button {
+    padding: 6px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--bar-fill);
+    color: white;
+    white-space: nowrap;
+}
+.mood-form.hidden {
+    display: none;
+}
+.mood-form.hidden {
+    display: none;
+}
+
+/* Чтобы клик по форме не закрывал её (прекращаем всплытие) */
+.mood-form {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Остальное по желанию - кнопки, поле ввода как обсуждали ранее */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+h1 {
+    text-align: center;
+}
+
+.calendar {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 700px; /* Чтобы не растягивалось на всю ширину */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    justify-content: center; /* Центрируем грид */
+}
+.mood-bar {
+    margin: 20px auto;
+    max-width: 700px;
+    background-color: var(--bar-bg);
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.mood-percentage {
+    margin: 0 auto 20px;
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+}
+/* Стили переключателя-ползунка */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  top: 0; left: 0; right: 0; bottom: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* Состояние checked - ползунок вправо и цвет активный */
+
+input:checked + .slider {
+  background-color: var(--bar-fill);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Опционально - сделать скруглённый ползунок */
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.theme-toggle .moon,
+.theme-toggle .sun {
+  pointer-events: none; /* чтобы клики не мешали переключателю */
+}
+
+/* Остальные стили переключателя оставь как раньше */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  top: 0; left: 0; right: 0; bottom: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--bar-fill);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.month-navigation button {
+    background-color: var(--bar-fill);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    margin: 0 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.month-navigation button:hover {
+    background-color: #1e8449; /* чуть темнее */
+}
+/* Основной контейнер календаря */
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* Карточка дня */
+.day {
+  background: var(--day-bg, #222);
+  border-radius: 8px;
+  padding: 8px;
+  width: 14%; /* ~7 дней в строке (100/7=14.28%) */
+  min-width: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+/* Состояния настроения */
+.day.happy { background-color: #4caf50; }
+.day.neutral { background-color: #ffeb3b; }
+.day.sad { background-color: #f44336; }
+
+/* Число дня */
+.day-number {
+  font-weight: bold;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Эмодзи */
+.emoji {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Форма комментария */
+.mood-form {
+  margin-top: 6px;
+}
+
+/* Комментарий - input */
+.comment-input {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Кнопки под комментариями */
+.comment-buttons, .emoji-buttons {
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Кнопки с эмодзи */
+.emoji-buttons button {
+  font-size: 1.3rem;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background: #555;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.emoji-buttons button:hover {
+  background: #777;
+}
+
+/* Кнопка сохранить */
+.comment-buttons button {
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.comment-buttons button:hover {
+  background-color: #0b7dda;
+}
+
+/* Управление шириной и расположением для мобилок */
+@media (max-width: 600px) {
+  .day {
+    width: 13.5%; /* чтобы влезало ровно 7 в строку с учетом gap */
+    min-width: 36px;
+    padding: 6px 4px;
+  }
+  .day-number {
+    font-size: 1rem;
+  }
+  .emoji {
+    font-size: 1.2rem;
+  }
+  .comment-input {
+    font-size: 0.85rem;
+  }
+  .emoji-buttons button {
+    font-size: 1.1rem;
+    padding: 2px 5px;
+  }
+  .comment-buttons button {
+    font-size: 0.9rem;
+    padding: 4px 10px;
+  }
+}
+
+/* Очень маленькие экраны (например, узкие телефоны) */
+@media (max-width: 400px) {
+  .day {
+    width: 14%;
+    min-width: 32px;
+    padding: 5px 3px;
+  }
+  .emoji {
+    font-size: 1rem;
+  }
+  .comment-buttons, .emoji-buttons {
+    gap: 4px;
+  }
+}
+.comment-buttons {
+  display: flex;
+  justify-content: center;
+}
+.comment-buttons button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: #28a745; /* приятный зеленый, не слишком яркий */
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.comment-buttons button:hover {
+  background-color: #44944A;
+}
+
+/* Минимальные стили для кнопок и календаря */
+.month-navigation button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    margin: 0 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+}
+.month-navigation button:hover {
+    background-color: #45a049;
+}
+.day {
+    display: inline-block;
+    width: 50px;
+    height: 70px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #222;
+    color: white;
+    vertical-align: top;
+    cursor: pointer;
+    padding: 4px;
+    position: relative;
+    user-select: none;
+}
+.day.happy { background-color: #4caf50; }
+.day.neutral { background-color: #fbc02d; }
+.day.sad { background-color: #f44336; }
+.day .day-number {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.day .emoji {
+    display: block;
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 4px;
+}
+.mood-form {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #333;
+    width: 100%;
+    border-radius: 6px;
+    padding: 6px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+.mood-form.hidden {
+    display: none;
+}
+.mood-form input.comment-input {
+    width: 100%;
+    padding: 4px;
+    border-radius: 4px;
+    border: none;
+    margin-bottom: 6px;
+}
+.comment-buttons button,
+.emoji-buttons button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 6px;
+    margin-right: 4px;
+    font-size: 1.1em;
+    background-color: #555;
+    color: white;
+}
+.comment-buttons button:hover,
+.emoji-buttons button:hover {
+    background-color: #777;
+}
+#clearAllBtn {
+    margin: 15px auto;
+    display: block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background-color: #d32f2f;
+    color: white;
+}
+#clearAllBtn:hover {
+    background-color: #b71c1c;
+}
+.mood-bar {
+    background-color: #555;
+    border-radius: 20px;
+    height: 20px;
+    width: 90%;
+    margin: 10px auto;
+    overflow: hidden;
+}
+.mood-fill {
+    background-color: #4caf50;
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+.mood-percentage {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: white;
+}
+.day {
+    position: relative;
+}
+
+.day .mood-form {
+    position: absolute;
+    top: 100%; /* Появляется под ячейкой */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background-color: var(--bg);
+    border: 1px solid white;
+    padding: 10px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* Адаптация под мобильный экран */
+@media (max-width: 400px) {
+    .day .mood-form {
+        width: 90vw;
+    }
+    }
+    .mood-form .comment-buttons button {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: var(--bar-fill);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .mood-form .comment-buttons button:hover {
+        background-color: #239954; /* потемнее зелёный при наведении */
+    }
+.mood-form .emoji-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 22px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin: 0 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Цвета по настроению */
+.mood-form .emoji-buttons button.happy {
+    background-color: var(--happy);
+}
+
+.mood-form .emoji-buttons button.neutral {
+    background-color: var(--neutral);
+    color: #000;
+}
+
+.mood-form .emoji-buttons button.sad {
+    background-color: var(--sad);
+}
+
+/* Эффект при наведении */
+.mood-form .emoji-buttons button:hover {
+    opacity: 0.9;
+}
+.mood-form .emoji-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 22px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin: 0 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Цвета по настроению */
+.mood-form .emoji-buttons button.happy {
+    background-color: var(--happy);
+}
+
+.mood-form .emoji-buttons button.neutral {
+    background-color: var(--neutral);
+    color: #000;
+}
+
+.mood-form .emoji-buttons button.sad {
+    background-color: var(--sad);
+}
+
+/* Эффект при наведении */
+.mood-form .emoji-buttons button:hover {
+    opacity: 0.9;
+}
+
+[data-theme="light"] {
+    --bg: #c7c7c7;              /* темно-серый фон — комфортнее для глаз */
+    --text: #000;
+    --bar-bg: #b0b0b0;
+    --bar-fill: #27ae60;
+
+    --day-bg: #dcdcdc;          /* светло-серый для ячеек */
+    --day-border: #777;         /* чуть темнее рамка */
+    --happy: #81c784;
+    --neutral: #fff176;
+    --sad: #e57373;
+}
+
+
+.day {
+    background-color: var(--day-bg, #222);
+    border: 1px solid var(--day-border, #555);
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
+}
+
+.day.happy { background-color: var(--happy); }
+.day.neutral { background-color: var(--neutral); }
+.day.sad { background-color: var(--sad); }
+
+[data-theme="light"] .day-number {
+    color: #000;
+}
+
+[data-theme="light"] .mood-percentage {
+    color: #000;
+}
+/* Стили для меню гамбургер */
+#menuToggle {
+    cursor: pointer;
+    font-size: 24px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    user-select: none;
+    color: var(--text);
+}
+#menuPanel {
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    background: var(--bg);
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 420px;
+    max-height: 550px;
+    overflow-y: auto;
+    padding: 10px;
+    z-index: 1000;
+    color: var(--text);
+}
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.tabBtn {
+    flex: 1;
+    padding: 6px 10px;
+    background: #555;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    user-select: none;
+}
+.tabBtn.active,
+.tabBtn:hover {
+    background-color: var(--bar-fill);
+    color: white;
+}
+.tabContent {
+    display: none;
+}
+.tabContent.active {
+    display: block;
+}
+#commentsList, #allTimeStatsList {
+    list-style: disc;
+    padding-left: 20px;
+}
+/* Немного отступов в списках */
+#allTimeStatsList p {
+    margin: 6px 0;
+}
