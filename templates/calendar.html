@@ -262,8 +262,21 @@
     function toggleForm(dayDiv) {
         document.querySelectorAll('.mood-form').forEach(f => f.classList.add('hidden'));
         const form = dayDiv.querySelector('.mood-form');
-        if (form) form.classList.remove('hidden');
+        if (form) {
+            form.classList.remove('hidden');
+
+            // Адаптивная позиция
+            const rect = form.getBoundingClientRect();
+            if (rect.right > window.innerWidth) {
+                form.style.left = 'auto';
+                form.style.right = '0';
+            } else {
+                form.style.left = '0';
+                form.style.right = 'auto';
+            }
+        }
     }
+
 
     function submitMood(button, date, mood) {
         const dayDiv = button.closest('.day');
