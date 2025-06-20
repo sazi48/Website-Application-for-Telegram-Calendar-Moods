@@ -262,20 +262,33 @@
     function toggleForm(dayDiv) {
         document.querySelectorAll('.mood-form').forEach(f => f.classList.add('hidden'));
         const form = dayDiv.querySelector('.mood-form');
+
         if (form) {
             form.classList.remove('hidden');
 
-            // Адаптивная позиция
+            // Сброс позиции
+            form.style.left = '';
+            form.style.right = '';
+            form.style.transform = '';
+
+            // Получаем координаты
             const rect = form.getBoundingClientRect();
-            if (rect.right > window.innerWidth) {
+            const windowWidth = window.innerWidth;
+
+            // Если форма выходит за правый край — прижимаем вправо
+            if (rect.right > windowWidth) {
                 form.style.left = 'auto';
                 form.style.right = '0';
-            } else {
+            }
+
+            // Если форма уходит за левый край — прижимаем влево
+            if (rect.left < 0) {
                 form.style.left = '0';
                 form.style.right = 'auto';
             }
         }
     }
+
 
 
     function submitMood(button, date, mood) {

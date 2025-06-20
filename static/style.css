@@ -1205,3 +1205,44 @@ input:checked + .slider:before {
     margin: 4px 6px;
   }
 }
+/* Адаптивные правки формы и заголовка */
+@media (max-width: 480px) {
+  .theme-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2em;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mood-form {
+    position: absolute;
+    z-index: 999;
+    width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 0 8px rgba(0,0,0,0.4);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .day {
+    position: relative;
+  }
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+}
