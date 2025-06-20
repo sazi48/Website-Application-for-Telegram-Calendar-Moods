@@ -985,3 +985,49 @@ input:checked + .slider:before {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+/* Увеличим кнопки навигации по месяцам на мобильных устройствах */
+@media (max-width: 600px) {
+  .month-navigation button {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    margin: 0 10px;
+  }
+}
+
+/* Сделаем шкалу настроения уже и немного ниже на мобилках */
+@media (max-width: 600px) {
+  .mood-bar {
+    width: 80vw;      /* чуть уже */
+    height: 10px;     /* ниже высота */
+    border-radius: 6px;
+  }
+  .mood-fill {
+    transition: width 0.3s ease;
+  }
+}
+
+/* Сдвинем переключатель темы и меню гамбургер ближе к центру на мобильных */
+@media (max-width: 600px) {
+  .theme-toggle {
+    right: 50%;
+    transform: translateX(50%);
+    top: 10px;
+    font-size: 16px;
+    gap: 6px;
+  }
+
+  #menuToggle {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    font-size: 22px;
+  }
+
+  #menuPanel {
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    max-width: 400px;
+  }
+}
