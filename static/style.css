@@ -1291,3 +1291,97 @@ input:checked + .slider:before {
         gap: 8px;
     }
 }
+/* ===== Адаптивность для Telegram Mini App ===== */
+
+.day {
+    position: relative;
+    overflow: visible;
+}
+
+.mood-form {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.6);
+    z-index: 10;
+    width: max-content;
+    max-width: 90vw;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: none;
+    box-sizing: border-box;
+}
+
+.comment-buttons button,
+.emoji-buttons button {
+    font-size: 1.1em;
+    padding: 6px 12px;
+    margin: 4px 4px 0 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.emoji-buttons button.happy { background: #2ecc71; }
+.emoji-buttons button.neutral { background: #f1c40f; }
+.emoji-buttons button.sad { background: #e74c3c; }
+
+.comment-buttons button {
+    background: #27ae60;
+    color: white;
+    font-weight: bold;
+}
+
+/* ——— Mobile адаптация ——— */
+@media (max-width: 480px) {
+    .mood-form {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%);
+    }
+
+    .theme-toggle {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1.1em;
+        margin: 10px auto;
+    }
+
+    h1 {
+        font-size: 1.2em;
+        text-align: center;
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+
+    .month-navigation button {
+        font-size: 1em;
+        padding: 8px 12px;
+    }
+
+    #clearAllBtn {
+        font-size: 1em;
+        padding: 8px 12px;
+    }
+
+    .day {
+        width: 48px;
+        height: 48px;
+        font-size: 1em;
+    }
+
+    .emoji-buttons button {
+        font-size: 1.3em;
+    }
+}

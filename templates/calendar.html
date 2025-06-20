@@ -266,15 +266,14 @@
         if (form) {
             form.classList.remove('hidden');
 
-            // Проверка: если форма выходит за экран — скроллим в неё
             const formRect = form.getBoundingClientRect();
-            const bottomOverflow = formRect.bottom - window.innerHeight;
-
-            if (bottomOverflow > 0) {
-                window.scrollBy({ top: bottomOverflow + 40, behavior: 'smooth' });
+            const overflow = formRect.bottom - window.innerHeight;
+            if (overflow > 0) {
+                window.scrollBy({ top: overflow + 40, behavior: 'smooth' });
             }
         }
     }
+
 
 
 
