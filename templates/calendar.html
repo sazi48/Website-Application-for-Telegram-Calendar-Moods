@@ -261,22 +261,9 @@
 
     function toggleForm(dayDiv) {
         document.querySelectorAll('.mood-form').forEach(f => f.classList.add('hidden'));
-
         const form = dayDiv.querySelector('.mood-form');
-        if (form) {
-            form.classList.remove('hidden');
-
-            const formRect = form.getBoundingClientRect();
-            const overflow = formRect.bottom - window.innerHeight;
-            if (overflow > 0) {
-                window.scrollBy({ top: overflow + 40, behavior: 'smooth' });
-            }
-        }
+        if (form) form.classList.remove('hidden');
     }
-
-
-
-
 
     function submitMood(button, date, mood) {
         const dayDiv = button.closest('.day');
