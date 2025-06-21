@@ -15,7 +15,6 @@
           </label>
         </div>
 
-
         <!-- Кнопка гамбургер -->
         <div id="menuToggle">&#9776;</div>
         <h1>Календарь — <span id="localMonthYear"></span></h1>
@@ -69,8 +68,11 @@
         return n < 10 ? '0' + n : n;
     }
 
+    // Здесь нужно поставить реальный user_id. Например:
+    // const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id || "default_user";
+    const userId = "default_user";
+
     let currentYear, currentMonth;
-    const userId = "default_user"; // здесь можно подставить реальный user_id
 
     function renderCalendar(data) {
         const container = document.getElementById('calendarContainer');
@@ -161,7 +163,7 @@
     }
 
     function fetchCalendar(year, month) {
-        fetch(`/get_calendar_data?year=${year}&month=${month}`)
+        fetch(`/get_calendar_data?year=${year}&month=${month}&user_id=${userId}`)
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
@@ -201,7 +203,7 @@
         const dayDiv = button.closest('.day');
         const comment = dayDiv.querySelector('.comment-input').value;
 
-        showMoodMessage(mood); // ← ВСТАВЬ СЮДА
+        showMoodMessage(mood);
 
         fetch('/submit_mood', {
             method: 'POST',
@@ -307,6 +309,7 @@
         fetchCalendar(now.getFullYear(), now.getMonth() + 1);
     });
 </script>
+
 <script>
 const moodMessages = {
     happy: [
@@ -347,7 +350,6 @@ const moodMessages = {
         "Даже в темноте может появиться свет. Он рядом. 🕯️",
         "Смотри на себя с добротой. Ты заслуживаешь поддержки. 🤍"
     ]
-
 };
 
 function showMoodMessage(mood) {
@@ -355,26 +357,9 @@ function showMoodMessage(mood) {
     if (!messageList) return;
 
     const message = messageList[Math.floor(Math.random() * messageList.length)];
-
-    const msgBox = document.createElement("div");
-    msgBox.className = `mood-popup ${mood}`;
-    msgBox.textContent = message;
-    document.body.appendChild(msgBox);
-
-    setTimeout(() => {
-        msgBox.classList.add('visible');
-    }, 10); // дожидаемся рендера
-
-    setTimeout(() => {
-        msgBox.classList.remove('visible');
-        setTimeout(() => msgBox.remove(), 500); // удаляем после анимации исчезновения
-    }, 2000);
+    alert(message);
 }
 </script>
-
-<footer class="footer">
-  © 2025 by <a href="https://t.me/kirillkkaaaaaa" target="_blank">@kirillkkaaaaaa</a>
-</footer>
 
 </body>
 </html>

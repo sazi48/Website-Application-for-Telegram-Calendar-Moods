@@ -40,24 +40,8 @@ def calculate_mood_level(moods):
     return round(level)
 
 def get_all_time_stats(user_id):
-    """
-    Правильный подсчет настроений за все время:
-    Учитываем по каждой дате только последнее состояние.
-    """
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-
-    # Получаем последние записи настроения для каждого дня
-    cursor.execute("""
-        SELECT date, mood FROM moods
-        WHERE user_id = ? AND mood IN ('happy', 'neutral', 'sad')
-        GROUP BY date
-        HAVING MAX(id)
-    """, (user_id,))
-    rows = cursor.fetchall()
-
-    # Альтернативный запрос, если выше не сработает (sqlite не поддерживает HAVING MAX(id) так просто):
-    # Можно выбрать последние записи через подзапрос, например:
 
     cursor.execute("""
         SELECT m.date, m.mood FROM moods m
@@ -68,7 +52,6 @@ def get_all_time_stats(user_id):
         ) sub ON m.id = sub.max_id
     """, (user_id,))
     rows = cursor.fetchall()
-
     conn.close()
 
     stats = {"happy": 0, "neutral": 0, "sad": 0, "total": 0}
@@ -92,6 +75,8 @@ def get_all_time_comments(user_id):
 
 @app.route('/')
 def index():
+    # Для первой загрузки просто отдаем шаблон без данных,
+    # user_id пока не нужен здесь, он будет в JS
     return render_template("calendar.html",
                            year=0,
                            month=0,
@@ -106,21 +91,17 @@ def submit_mood():
     mood = request.form['mood']
     comment = request.form.get('comment', '')
 
-    # Обновляем запись, если есть, иначе создаём
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    # Проверяем, есть ли запись на эту дату
     cursor.execute("SELECT id FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
     row = cursor.fetchone()
     if row:
         cursor.execute("""
-            UPDATE moods SET mood = ?, comment = ?
-            WHERE id = ?
+            UPDATE moods SET mood = ?, comment = ? WHERE id = ?
         """, (mood, comment, row[0]))
     else:
         cursor.execute("""
-            INSERT INTO moods (user_id, date, mood, comment)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO moods (user_id, date, mood, comment) VALUES (?, ?, ?, ?)
         """, (user_id, date, mood, comment))
     conn.commit()
     conn.close()
@@ -162,7 +143,7 @@ def get_comments():
 
 @app.route('/get_calendar_data')
 def get_calendar_data():
-    user_id = "default_user"
+    user_id = request.args.get("user_id", "default_user")
     year = request.args.get('year', type=int)
     month = request.args.get('month', type=int)
     if not year or not month:
