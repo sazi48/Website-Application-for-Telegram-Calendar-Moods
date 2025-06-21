@@ -1244,9 +1244,4 @@ input:checked + .slider:before {
     padding: 8px 12px !important;
     border-radius: 6px !important;
   }
-  .theme-toggle {
-    top: 14px;
-    right: 20px;
-    transform: scale(2.9); /* чуть уменьшить */
-  }
 }
