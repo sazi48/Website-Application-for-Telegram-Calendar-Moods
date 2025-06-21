@@ -1162,3 +1162,64 @@ input:checked + .slider:before {
     font-size: 14px !important;
     padding: 6px 10px !important;
     }
+@media (max-width: 600px) {
+  .day {
+    width: 70px !important;
+    height: 100px !important;
+    padding: 10px !important;
+  }
+
+  .day .day-number {
+    font-size: 1.6rem !important;
+  }
+
+  .day .emoji {
+    font-size: 2.2rem !important;
+    margin-top: 6px !important;
+  }
+
+  .mood-form {
+    width: 90vw !important;
+    padding: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .mood-form .emoji-buttons button {
+    font-size: 30px !important;
+    padding: 14px !important;
+    margin: 0 6px !important;
+  }
+
+  .comment-buttons button {
+    font-size: 16px !important;
+    padding: 10px 16px !important;
+  }
+
+  .comment-input {
+    font-size: 16px !important;
+    padding: 8px !important;
+  }
+
+  .mood-percentage {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .month-navigation button,
+  #clearAllBtn {
+    font-size: 16px !important;
+    padding: 12px 16px !important;
+  }
+
+  #menuToggle {
+    font-size: 36px !important;
+    top: 12px !important;
+    left: 12px !important;
+  }
+
+  #menuPanel {
+    width: 90vw !important;
+    left: 5vw !important;
+  }
+}
