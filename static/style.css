@@ -1180,7 +1180,42 @@ input:checked + .slider:before {
   text-decoration: underline;
 }
 
+.slider:before {
+  position: absolute;
+  content: "🌙"; /* начальное состояние — тёмная тема */
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  transition: 0.4s;
+}
+
+/* когда включена светлая тема — солнце */
+[data-theme="light"] .slider:before {
+  content: "☀";
+}
+
 @media (max-width: 600px) {
+  .HEAD {
+    position: relative; /* необходимо для центрирования заголовка */
+  }
+
+  .HEAD h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    font-size: 20px !important;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
   .day {
     width: 70px !important;
     height: 100px !important;
@@ -1239,6 +1274,7 @@ input:checked + .slider:before {
   #menuPanel {
     width: 85vw !important;
   }
+
   .month-navigation button {
     font-size: 14px !important;
     padding: 8px 12px !important;
@@ -1248,7 +1284,7 @@ input:checked + .slider:before {
   .theme-toggle {
     margin-top: 5px !important;
     margin-bottom: 20px !important;
-    top: 25px;         /* чуть ниже на телефоне */
+    top: 25px;
     right: 1px;
   }
 
@@ -1265,17 +1301,25 @@ input:checked + .slider:before {
     margin-top: 14px !important;
     margin-bottom: 16px !important;
   }
-  .HEAD h1 {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      margin: 0;
-      font-size: 1.4rem;
-    }
-
 }
 
+
 @media (max-width: 480px) {
+  .HEAD {
+    position: relative;
+  }
+
+  .HEAD h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 18px;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
   .calendar {
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
@@ -1288,10 +1332,6 @@ input:checked + .slider:before {
 
   .day .emoji {
     font-size: 1.1rem;
-  }
-
-  h1 {
-    font-size: 1rem;
   }
 
   .theme-toggle {
@@ -1329,23 +1369,4 @@ input:checked + .slider:before {
   .footer {
     font-size: 0.75rem;
   }
-}
-.slider:before {
-  position: absolute;
-  content: "🌙"; /* начальное состояние — тёмная тема */
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 14px;
-  line-height: 20px;
-  transition: 0.4s;
-}
-
-/* когда включена светлая тема — солнце */
-[data-theme="light"] .slider:before {
-  content: "☀";
 }
