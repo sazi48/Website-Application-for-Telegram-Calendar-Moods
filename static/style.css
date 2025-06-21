@@ -272,8 +272,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 0;
-    margin: 0;
+    padding: 10px;
     font-family: sans-serif;
     background-color: var(--bg);
     color: var(--text);
@@ -457,10 +456,8 @@ input:checked + .slider:before {
   justify-content: center;
   gap: 8px;
   max-width: 600px;
-  padding: 0;
-  margin: 0;
-  width: 100vw;
-
+  margin: auto;
+  padding: auto;
 }
 
 /* Карточка дня */
@@ -468,7 +465,7 @@ input:checked + .slider:before {
   background: var(--day-bg, #222);
   border-radius: 8px;
   padding: 8px;
-  width: 14%; /* ~7 дней в строке (100/7=14.28%) */
+  width: 14px; /* ~7 дней в строке (100/7=14.28%) */
   min-width: 40px;
   box-sizing: border-box;
   cursor: pointer;
@@ -864,7 +861,7 @@ input:checked + .slider:before {
 /* Увеличиваем размер ячеек календаря */
 .day {
     width: 80px !important;      /* или min-width: 80px; */
-    height: 110px !important;
+    height: 50px !important;
     padding: 12px !important;
 }
 
