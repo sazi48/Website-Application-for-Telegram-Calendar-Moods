@@ -1066,69 +1066,124 @@ input:checked + .slider:before {
 }
 /* Адаптив для мобильных */
 @media (max-width: 480px) {
+    /* Размеры меню */
     #menuPanel {
-        width: 90vw;
-        max-height: 60vh;
-        left: 5vw;
-        top: 40px;
-        font-size: 14px;
-        padding: 8px;
+        width: 90vw !important;
+        max-height: 65vh !important;
+        left: 5vw !important;
+        top: 40px !important;
+        font-size: 16px;
+        padding: 12px;
     }
     #menuToggle {
-        font-size: 28px;
+        font-size: 36px;
         top: 8px;
         left: 8px;
+        padding: 4px;
     }
+
+    /* Вкладки */
     .tabs {
         flex-direction: column;
+        gap: 8px;
     }
     .tabBtn {
-        padding: 8px 6px;
-        font-size: 14px;
-        border-radius: 4px;
+        padding: 12px 10px;
+        font-size: 18px;
+        border-radius: 6px;
     }
+
+    /* Календарь */
     .calendar {
-        max-width: 95vw;
+        max-width: 95vw !important;
         margin: 0 auto;
-        font-size: 14px;
-    }
-    .day {
-        min-width: 28px;
-        min-height: 36px;
-        margin: 2px;
-        font-size: 14px;
-    }
-    .day-number {
-        font-size: 12px;
-    }
-    .emoji-buttons button,
-    .comment-buttons button {
-        padding: 6px 8px;
         font-size: 16px;
     }
+    .day {
+        min-width: 40px;
+        min-height: 48px;
+        margin: 4px;
+        font-size: 18px;
+        border-radius: 8px;
+    }
+    .day-number {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    /* Кнопки выбора настроения и сохранения */
+    .emoji-buttons button,
+    .comment-buttons button {
+        padding: 10px 14px;
+        font-size: 20px;
+        border-radius: 6px;
+    }
     .comment-input {
-        font-size: 14px;
-        padding: 6px 8px;
+        font-size: 16px;
+        padding: 10px 12px;
+        border-radius: 6px;
     }
+
+    /* Всплывающие сообщения */
     .mood-popup {
-        font-size: 14px;
-        max-width: 90vw;
-        bottom: 15p !important;
-        left: 5vw;
-        right: 5vw;
-        padding: 10px;
+        font-size: 16px !important;
+        max-width: 90vw !important;
+        bottom: 15px !important;
+        left: 5vw !important;
+        right: 5vw !important;
+        padding: 14px !important;
+        border-radius: 12px;
     }
-    /* Кнопки вперед/назад */
+
+    /* Навигация по месяцам */
     .month-navigation button {
-        font-size: 14px;
-        padding: 6px 12px;
-        margin: 0 5px;
+        font-size: 18px;
+        padding: 10px 16px;
+        margin: 0 8px;
+        border-radius: 8px;
+        cursor: pointer;
     }
+
+    /* Кнопка очистки */
     #clearAllBtn {
-        font-size: 14px;
-        padding: 8px 12px;
-        margin-top: 10px;
+        font-size: 18px;
+        padding: 12px 16px;
+        margin-top: 14px;
         width: 90vw;
-        max-width: 400px;
+        max-width: 420px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    /* Переключатель темы */
+    .theme-toggle {
+        font-size: 24px !important;
+    }
+    .theme-toggle span.moon,
+    .theme-toggle span.sun {
+        font-size: 1.8em !important;
+    }
+    .theme-toggle .switch {
+        width: 60px !important;
+        height: 34px !important;
+    }
+    .theme-toggle .switch input:checked + .slider {
+        background-color: var(--bar-fill) !important;
+    }
+    .theme-toggle .slider {
+        border-radius: 34px !important;
+    }
+    .theme-toggle .slider.round {
+        border-radius: 34px !important;
+    }
+    .theme-toggle .slider:before {
+        height: 26px !important;
+        width: 26px !important;
+        left: 4px !important;
+        bottom: 4px !important;
+    }
+    .theme-toggle input:checked + .slider:before {
+        transform: translateX(26px) !important;
     }
 }
+
