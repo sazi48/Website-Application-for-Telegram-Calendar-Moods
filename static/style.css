@@ -1239,5 +1239,14 @@ input:checked + .slider:before {
   #menuPanel {
     width: 85vw !important;
   }
-  
+  .month-navigation button {
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+  }
+  .theme-toggle {
+    top: 14px;
+    right: 12px;
+    transform: scale(0.9); /* чуть уменьшить */
+  }
 }
