@@ -1153,49 +1153,50 @@ input:checked + .slider:before {
 #allTimeStatsList p {
     margin: 6px 0;
 }
-/* ======= МОБИЛЬНАЯ АДАПТАЦИЯ ======= */
+/* 📱 Мобильная адаптация */
 @media (max-width: 768px) {
   .calendar {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 0 10px;
+    grid-template-columns: repeat(5, 1fr); /* 5 дней в строке */
+    gap: 6px;
+    padding: 0 5px;
   }
 
   .day {
-    width: 100% !important;
-    height: auto !important;
-    padding: 16px !important;
-    font-size: 1rem;
+    width: 100%; /* адаптивно по ширине колонки */
+    height: 80px;
+    font-size: 0.9rem;
+    padding: 6px;
   }
 
   .day .day-number {
-    font-size: 1.6rem !important;
+    font-size: 1.2rem !important;
   }
 
   .day .emoji {
-    font-size: 2rem !important;
-    margin-top: 8px !important;
+    font-size: 1.6rem !important;
   }
 
   .mood-form {
-    width: 100% !important;
-    left: 0 !important;
-    transform: none !important;
-    padding: 12px !important;
-    border-radius: 12px !important;
-    font-size: 1rem;
+    width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .comment-input {
-    font-size: 1rem !important;
+  .mood-form .emoji-buttons button {
+    font-size: 22px !important;
+    padding: 10px !important;
+    margin: 0 3px !important;
+  }
+
+  .comment-buttons button {
+    font-size: 14px !important;
     padding: 10px !important;
   }
 
-  .emoji-buttons button,
-  .comment-buttons button {
-    font-size: 24px !important;
-    padding: 12px !important;
-    flex: 1;
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
   }
 
   .month-navigation {
@@ -1205,30 +1206,40 @@ input:checked + .slider:before {
 
   .month-navigation button {
     width: 100%;
-    font-size: 18px !important;
-    padding: 12px !important;
-  }
-
-  #clearAllBtn {
-    width: 100%;
-    font-size: 18px !important;
-    padding: 14px !important;
-  }
-
-  .theme-toggle {
-    position: static;
-    margin: 10px 0;
-    justify-content: center;
-  }
-
-  #menuToggle {
-    font-size: 32px !important;
-    top: 10px;
-    left: 10px;
+    font-size: 16px !important;
+    padding: 10px;
   }
 
   #menuPanel {
-    width: 90vw !important;
+    width: 90vw;
     left: 5vw;
+    max-height: 60vh;
+  }
+
+  #menuToggle {
+    font-size: 28px !important;
+  }
+
+  #clearAllBtn {
+    font-size: 18px !important;
+    padding: 12px 20px !important;
+    width: 100%;
+  }
+
+  .HEAD {
+    padding: 10px 8px;
+  }
+
+  .mood-percentage {
+    font-size: 14px;
+  }
+
+  .mood-bar {
+    height: 10px;
+  }
+
+  .mood-popup {
+    font-size: 1rem;
+    padding: 12px 18px;
   }
 }
