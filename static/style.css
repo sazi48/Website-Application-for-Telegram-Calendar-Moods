@@ -1179,7 +1179,7 @@ input:checked + .slider:before {
   }
 
   .mood-form {
-    width: 90vw !important;
+    width: 50vw !important;
     padding: 10px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
