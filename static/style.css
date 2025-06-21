@@ -1248,7 +1248,7 @@ input:checked + .slider:before {
   .theme-toggle {
     margin-top: 5px !important;
     margin-bottom: 20px !important;
-    top: 20px;         /* чуть ниже на телефоне */
+    top: 25px;         /* чуть ниже на телефоне */
     right: 1px;
   }
 
