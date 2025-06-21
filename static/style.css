@@ -1244,4 +1244,20 @@ input:checked + .slider:before {
     padding: 8px 12px !important;
     border-radius: 6px !important;
   }
+  .calendar {
+    margin-top: 100px !important;
+  }
+  .theme-toggle {
+    margin-top: 5px !important;
+    transform: scale(0.9);
+  }
+
+  .theme-toggle .moon,
+  .theme-toggle .sun {
+    font-size: 1rem !important;
+  }
+
+  .theme-toggle .switch {
+    transform: scale(0.9);
+  }
 }
