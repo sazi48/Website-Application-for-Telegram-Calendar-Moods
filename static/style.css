@@ -1201,21 +1201,6 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 600px) {
-  .HEAD {
-    position: relative; /* необходимо для центрирования заголовка */
-  }
-
-  .HEAD h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 20px;
-    font-size: 20px !important;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
   .day {
     width: 70px !important;
     height: 100px !important;
@@ -1274,7 +1259,6 @@ input:checked + .slider:before {
   #menuPanel {
     width: 85vw !important;
   }
-
   .month-navigation button {
     font-size: 14px !important;
     padding: 8px 12px !important;
@@ -1284,7 +1268,7 @@ input:checked + .slider:before {
   .theme-toggle {
     margin-top: 5px !important;
     margin-bottom: 20px !important;
-    top: 25px;
+    top: 25px;         /* чуть ниже на телефоне */
     right: 1px;
   }
 
@@ -1301,25 +1285,14 @@ input:checked + .slider:before {
     margin-top: 14px !important;
     margin-bottom: 16px !important;
   }
+  .HEAD h1 {
+    margin-top: 20px !important;
+    font-size: 20px !important;
+    padding-right: 60px !important;
+  }
 }
 
-
 @media (max-width: 480px) {
-  .HEAD {
-    position: relative;
-  }
-
-  .HEAD h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 18px;
-    font-size: 1rem;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
   .calendar {
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
@@ -1332,6 +1305,10 @@ input:checked + .slider:before {
 
   .day .emoji {
     font-size: 1.1rem;
+  }
+
+  h1 {
+    font-size: 1rem;
   }
 
   .theme-toggle {
