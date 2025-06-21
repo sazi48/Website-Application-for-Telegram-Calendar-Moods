@@ -1153,7 +1153,7 @@ input:checked + .slider:before {
 #allTimeStatsList p {
     margin: 6px 0;
 }
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .calendar {
     display: grid !important;
     grid-template-columns: repeat(5, 1fr) !important;
@@ -1229,7 +1229,7 @@ input:checked + .slider:before {
   }
 }
 /* 📱 Адаптация календаря под мобильные устройства */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .calendar {
     grid-template-columns: repeat(5, 1fr) !important;
     width: 100% !important;
