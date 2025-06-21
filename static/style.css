@@ -1179,7 +1179,7 @@ input:checked + .slider:before {
   }
 
   .mood-form {
-    width: 90vw !important;
+    width: 15vw !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
   }
@@ -1215,7 +1215,7 @@ input:checked + .slider:before {
   #clearAllBtn {
     font-size: 18px !important;
     padding: 12px 20px !important;
-    width: 100% !important;
+    width: 50% !important;
   }
 
   .mood-bar {
@@ -1226,5 +1226,24 @@ input:checked + .slider:before {
   .mood-percentage {
     font-size: 14px !important;
     text-align: center;
+  }
+}
+/* 📱 Адаптация календаря под мобильные устройства */
+@media (max-width: 768px) {
+  .calendar {
+    grid-template-columns: repeat(5, 1fr) !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 8px !important;
+  }
+
+  .day {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 70px !important;
+  }
+
+  body {
+    padding: 8px !important;
   }
 }
