@@ -1124,7 +1124,7 @@ input:checked + .slider:before {
 }
 .tabBtn {
     flex: 1;
-    padding: 6px 7px;
+    padding: 3px 5px;
     background: #555;
     border: none;
     border-radius: 6px;
