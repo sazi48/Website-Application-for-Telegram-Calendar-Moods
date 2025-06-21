@@ -1239,7 +1239,5 @@ input:checked + .slider:before {
   #menuPanel {
     width: 85vw !important;
   }
-  .calendar {
-    margin-top: 90px;
-  }
+  
 }
