@@ -822,6 +822,7 @@ input:checked + .slider:before {
     z-index: 1000;
     color: var(--text);
 }
+
 .tabBtn {
     flex: 1;
     padding: 6px 10px;
@@ -1119,10 +1120,11 @@ input:checked + .slider:before {
 }
 .tabBtn {
     flex: 1;
-    padding: 6px 10px;
+    font-size: 12px;
+    padding: 4px 8px;
     background: #555;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     color: white;
     cursor: pointer;
     font-weight: 600;
@@ -1157,6 +1159,7 @@ input:checked + .slider:before {
     font-size: 14px !important;
     padding: 6px 10px !important;
     }
+
 @media (max-width: 600px) {
   .day {
     width: 70px !important;
@@ -1201,11 +1204,6 @@ input:checked + .slider:before {
     margin-bottom: 10px;
   }
 
-  .tabs {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 7px;
-  }
   .month-navigation button,
   #clearAllBtn {
     font-size: 16px !important;
@@ -1219,6 +1217,6 @@ input:checked + .slider:before {
   }
 
   #menuPanel {
-    width: 88vw !important;
+    width: 85vw !important;
   }
 }
