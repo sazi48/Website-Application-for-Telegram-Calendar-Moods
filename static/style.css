@@ -983,7 +983,7 @@ input:checked + .slider:before {
 /* Кнопка очистки */
 #clearAllBtn {
     font-size: 22px !important;   /* с 20px до 22px */
-    padding: 18px 28px !important;
+    padding: 9px 18px !important;
     border-radius: 12px !important;
 }
 
@@ -1152,94 +1152,4 @@ input:checked + .slider:before {
 /* Немного отступов в списках */
 #allTimeStatsList p {
     margin: 6px 0;
-}
-/* 📱 Мобильная адаптация */
-@media (max-width: 768px) {
-  .calendar {
-    grid-template-columns: repeat(5, 1fr); /* 5 дней в строке */
-    gap: 6px;
-    padding: 0 5px;
-  }
-
-  .day {
-    width: 100%; /* адаптивно по ширине колонки */
-    height: 80px;
-    font-size: 0.9rem;
-    padding: 6px;
-  }
-
-  .day .day-number {
-    font-size: 1.2rem !important;
-  }
-
-  .day .emoji {
-    font-size: 1.6rem !important;
-  }
-
-  .mood-form {
-    width: 90vw;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .mood-form .emoji-buttons button {
-    font-size: 22px !important;
-    padding: 10px !important;
-    margin: 0 3px !important;
-  }
-
-  .comment-buttons button {
-    font-size: 14px !important;
-    padding: 10px !important;
-  }
-
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    font-size: 16px;
-  }
-
-  .month-navigation {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .month-navigation button {
-    width: 100%;
-    font-size: 16px !important;
-    padding: 10px;
-  }
-
-  #menuPanel {
-    width: 90vw;
-    left: 5vw;
-    max-height: 60vh;
-  }
-
-  #menuToggle {
-    font-size: 28px !important;
-  }
-
-  #clearAllBtn {
-    font-size: 18px !important;
-    padding: 12px 20px !important;
-    width: 100%;
-  }
-
-  .HEAD {
-    padding: 10px 8px;
-  }
-
-  .mood-percentage {
-    font-size: 14px;
-  }
-
-  .mood-bar {
-    height: 10px;
-  }
-
-  .mood-popup {
-    font-size: 1rem;
-    padding: 12px 18px;
-  }
 }
