@@ -1247,19 +1247,18 @@ input:checked + .slider:before {
 
   .theme-toggle {
     margin-top: 5px !important;
-    transform: scale(0.9);
+    margin-bottom: 20px !important;
+    top: 25px;         /* чуть ниже на телефоне */
+    right: 16px;
   }
 
   .theme-toggle .moon,
   .theme-toggle .sun {
-    font-size: 1rem !important;
+    font-size: 2rem !important;
   }
 
   .theme-toggle .switch {
     transform: scale(0.9);
-  }
-  .theme-toggle {
-    margin-bottom: 20px !important;
   }
 
   .month-navigation {
