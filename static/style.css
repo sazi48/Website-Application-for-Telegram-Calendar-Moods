@@ -1160,6 +1160,26 @@ input:checked + .slider:before {
     padding: 6px 10px !important;
     }
 
+.footer {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+  margin-top: auto;
+  opacity: 0.6;
+}
+
+.footer a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 600px) {
   .day {
     width: 70px !important;
@@ -1218,5 +1238,8 @@ input:checked + .slider:before {
 
   #menuPanel {
     width: 85vw !important;
+  }
+  .calendar {
+    margin-top: 90px;
   }
 }
