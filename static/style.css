@@ -1153,3 +1153,78 @@ input:checked + .slider:before {
 #allTimeStatsList p {
     margin: 6px 0;
 }
+@media (max-width: 768px) {
+  .calendar {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 8px !important;
+    padding: 0 5px !important;
+    justify-content: center !important;
+  }
+
+  .day {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 70px !important;
+    font-size: 0.9rem !important;
+    padding: 8px !important;
+  }
+
+  .day .day-number {
+    font-size: 1.2rem !important;
+  }
+
+  .day .emoji {
+    font-size: 1.6rem !important;
+  }
+
+  .mood-form {
+    width: 90vw !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .mood-form .emoji-buttons button {
+    font-size: 20px !important;
+    padding: 10px !important;
+    margin: 0 3px !important;
+  }
+
+  .comment-buttons button {
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+
+  .month-navigation {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .month-navigation button {
+    width: 100% !important;
+    font-size: 16px !important;
+    padding: 10px !important;
+  }
+
+  #menuPanel {
+    width: 90vw !important;
+    left: 5vw !important;
+    max-height: 60vh !important;
+  }
+
+  #clearAllBtn {
+    font-size: 18px !important;
+    padding: 12px 20px !important;
+    width: 100% !important;
+  }
+
+  .mood-bar {
+    width: 90vw !important;
+    height: 12px !important;
+  }
+
+  .mood-percentage {
+    font-size: 14px !important;
+    text-align: center;
+  }
+}
