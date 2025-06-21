@@ -1,3 +1,4 @@
+# init_db.py
 import sqlite3
 
 conn = sqlite3.connect("database.db")
@@ -9,12 +10,11 @@ CREATE TABLE IF NOT EXISTS moods (
     user_id TEXT NOT NULL,
     date TEXT NOT NULL,
     mood TEXT NOT NULL,
-    comment TEXT,
-    UNIQUE(user_id, date) ON CONFLICT REPLACE
+    comment TEXT
 )
 """)
 
 conn.commit()
 conn.close()
 
-print("✅ Таблица 'moods' создана или обновлена.")
+print("✅ Таблица 'moods' создана.")

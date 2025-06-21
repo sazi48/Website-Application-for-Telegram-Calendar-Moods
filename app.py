@@ -162,7 +162,7 @@ def get_comments():
 
 @app.route('/get_calendar_data')
 def get_calendar_data():
-    user_id = request.args.get("user_id", "default_user")
+    user_id = "default_user"
     year = request.args.get('year', type=int)
     month = request.args.get('month', type=int)
     if not year or not month:
