@@ -1248,8 +1248,8 @@ input:checked + .slider:before {
   .theme-toggle {
     margin-top: 5px !important;
     margin-bottom: 20px !important;
-    top: 25px;         /* чуть ниже на телефоне */
-    right: 16px;
+    top: 20px;         /* чуть ниже на телефоне */
+    right: 100px;
   }
 
   .theme-toggle .moon,
