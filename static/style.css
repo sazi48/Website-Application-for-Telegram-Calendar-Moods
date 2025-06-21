@@ -23,7 +23,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     font-family: sans-serif;
-    padding: 20px;
+    padding: 10px;
     transition: 0.3s;
 }
 
