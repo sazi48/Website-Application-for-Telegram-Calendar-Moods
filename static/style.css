@@ -1067,10 +1067,10 @@ input:checked + .slider:before {
 /* Адаптив для мобильных */
 @media (max-width: 480px) {
     #menuPanel {
-        width: 90vw !important;
-        max-height: 60vh !important;
-        left: 5vw !important;
-        top: 40px !important;
+        width: 90vw;
+        max-height: 60vh;
+        left: 5vw;
+        top: 40px;
         font-size: 14px;
         padding: 8px;
     }
@@ -1088,7 +1088,7 @@ input:checked + .slider:before {
         border-radius: 4px;
     }
     .calendar {
-        max-width: 95vw !important;
+        max-width: 95vw;
         margin: 0 auto;
         font-size: 14px;
     }
@@ -1111,12 +1111,12 @@ input:checked + .slider:before {
         padding: 6px 8px;
     }
     .mood-popup {
-        font-size: 14px !important;
-        max-width: 90vw !important;
-        bottom: 15px !important;
-        left: 5vw !important;
-        right: 5vw !important;
-        padding: 10px !important;
+        font-size: 14px;
+        max-width: 90vw;
+        bottom: 15p !important;
+        left: 5vw;
+        right: 5vw;
+        padding: 10px;
     }
     /* Кнопки вперед/назад */
     .month-navigation button {
