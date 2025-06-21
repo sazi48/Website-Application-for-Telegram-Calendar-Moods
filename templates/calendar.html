@@ -8,19 +8,18 @@
 </head>
 <body>
     <header class="HEAD">
-        <div class="top-header-row">
-          <div id="menuToggle">&#9776;</div>
-          <h1 class="header-title">Календарь — <span id="localMonthYear"></span></h1>
-          <div class="theme-toggle">
-            <span class="moon">🌙</span>
-            <label class="switch">
-              <input type="checkbox" id="themeSwitch">
-              <span class="slider round"></span>
-            </label>
-            <span class="sun">☀</span>
-          </div>
+        <div class="theme-toggle">
+          <span class="moon" style="font-size: 1em;">🌙</span>
+          <label class="switch" style="margin: 1 4px;">
+            <input type="checkbox" id="themeSwitch">
+            <span class="slider round"></span>
+          </label>
+          <span class="sun" style="font-size: 1em;">☀</span>
         </div>
 
+        <!-- Кнопка гамбургер -->
+        <div id="menuToggle">&#9776;</div>
+        <h1>Календарь — <span id="localMonthYear"></span></h1>
 
         <!-- Панель меню -->
         <div id="menuPanel" style="display:none;">
