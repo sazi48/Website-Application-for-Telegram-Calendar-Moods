@@ -1269,8 +1269,10 @@ input:checked + .slider:before {
     margin-top: 20px !important;
     font-size: 20px !important;
     padding-right: 60px !important;
+    text-align: center !important;
   }
 }
+
 @media (max-width: 480px) {
   .calendar {
     grid-template-columns: repeat(3, 1fr);
@@ -1288,6 +1290,7 @@ input:checked + .slider:before {
 
   h1 {
     font-size: 1rem;
+    text-align: center !important;
   }
 
   .theme-toggle {
