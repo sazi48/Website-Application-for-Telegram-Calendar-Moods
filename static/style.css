@@ -1271,3 +1271,58 @@ input:checked + .slider:before {
     padding-right: 60px !important;
   }
 }
+@media (max-width: 480px) {
+  .calendar {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .day {
+    padding: 6px 4px;
+    font-size: 0.75rem;
+  }
+
+  .day .emoji {
+    font-size: 1.1rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  .theme-toggle {
+    font-size: 0.9rem;
+    gap: 6px;
+  }
+
+  .mood-form {
+    width: 95vw;
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .comment-input {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+
+  .emoji-buttons button,
+  .comment-buttons button {
+    font-size: 1rem;
+    padding: 5px;
+  }
+
+  #clearAllBtn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .month-navigation button {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .footer {
+    font-size: 0.75rem;
+  }
+}
