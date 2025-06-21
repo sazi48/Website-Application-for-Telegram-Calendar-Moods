@@ -1219,6 +1219,6 @@ input:checked + .slider:before {
   }
 
   #menuPanel {
-    width: 85vw !important;
+    width: 88vw !important;
   }
 }
