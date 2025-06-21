@@ -133,7 +133,7 @@
     }
 
     let currentYear, currentMonth;
-    const userId = "default_user"; // если есть динамический user_id — подставь его здесь
+    const userId = "default_user"; // здесь можно подставить реальный user_id
 
     function renderCalendar(data) {
         const container = document.getElementById('calendarContainer');
@@ -142,24 +142,25 @@
         // Обновляем все комментарии за всё время
         const allTimeCommentsList = document.getElementById('allTimeCommentsList');
         allTimeCommentsList.innerHTML = '';
-        if(data.comments && data.comments.length > 0) {
-          data.comments.forEach(({date, comment}) => {
-            if(comment.trim()) {
-              const li = document.createElement('li');
-              li.textContent = `${date} - ${comment}`;
-              allTimeCommentsList.appendChild(li);
-            }
-          });
+        const allComments = data.all_time_comments || data.comments || [];
+        if (allComments.length > 0) {
+            allComments.forEach(({date, comment}) => {
+                if (comment.trim()) {
+                    const li = document.createElement('li');
+                    li.textContent = `${date} - ${comment}`;
+                    allTimeCommentsList.appendChild(li);
+                }
+            });
         } else {
-          const li = document.createElement('li');
-          li.textContent = 'Комментариев пока нет.';
-          allTimeCommentsList.appendChild(li);
+            const li = document.createElement('li');
+            li.textContent = 'Комментариев пока нет.';
+            allTimeCommentsList.appendChild(li);
         }
 
         data.days.forEach(dayObj => {
             const dayDiv = document.createElement('div');
             dayDiv.classList.add('day');
-            if(dayObj.mood) dayDiv.classList.add(dayObj.mood);
+            if (dayObj.mood) dayDiv.classList.add(dayObj.mood);
             dayDiv.setAttribute('data-date', dayObj.date_str);
             dayDiv.onclick = () => toggleForm(dayDiv);
 
@@ -180,74 +181,69 @@
                     </div>
                 </div>
             `;
-
             container.appendChild(dayDiv);
         });
 
-        const moodFill = document.getElementById('moodFill');
-        const moodPercentage = document.getElementById('moodPercentage');
-        moodFill.style.width = data.mood_level + '%';
-        moodPercentage.textContent = 'Общее настроение: ' + data.mood_level + '%';
+        // Обновляем шкалу
+        document.getElementById('moodFill').style.width = data.mood_level + '%';
+        document.getElementById('moodPercentage').textContent = 'Общее настроение: ' + data.mood_level + '%';
 
+        // Заголовок месяца
         document.getElementById('localMonthYear').textContent = `${pad(data.month)}/${data.year}`;
-
         currentYear = data.year;
         currentMonth = data.month;
 
+        // Статистика по месяцу
         let happyCount = 0, neutralCount = 0, sadCount = 0;
         data.days.forEach(day => {
-          if(day.mood === 'happy') happyCount++;
-          else if(day.mood === 'neutral') neutralCount++;
-          else if(day.mood === 'sad') sadCount++;
+            if (day.mood === 'happy') happyCount++;
+            else if (day.mood === 'neutral') neutralCount++;
+            else if (day.mood === 'sad') sadCount++;
         });
         document.getElementById('countHappy').textContent = happyCount;
         document.getElementById('countNeutral').textContent = neutralCount;
         document.getElementById('countSad').textContent = sadCount;
 
+        // Комментарии по месяцу
         const commentsList = document.getElementById('commentsList');
         commentsList.innerHTML = '';
-        data.comments.forEach(({date, comment}) => {
-          if(comment.trim()) {
-            const li = document.createElement('li');
-            li.textContent = `${date} — ${comment}`;
-            commentsList.appendChild(li);
-          }
+        (data.comments || []).forEach(({date, comment}) => {
+            if (comment.trim()) {
+                const li = document.createElement('li');
+                li.textContent = `${date} — ${comment}`;
+                commentsList.appendChild(li);
+            }
         });
 
-        if (data.all_time_stats) {
-          document.getElementById('allTimeHappy').textContent = data.all_time_stats.happy || 0;
-          document.getElementById('allTimeNeutral').textContent = data.all_time_stats.neutral || 0;
-          document.getElementById('allTimeSad').textContent = data.all_time_stats.sad || 0;
-          document.getElementById('allTimeTotal').textContent = data.all_time_stats.total || 0;
-        } else {
-          document.getElementById('allTimeHappy').textContent = '0';
-          document.getElementById('allTimeNeutral').textContent = '0';
-          document.getElementById('allTimeSad').textContent = '0';
-          document.getElementById('allTimeTotal').textContent = '0';
-        }
+        // Статистика за всё время
+        const stats = data.all_time_stats || {};
+        document.getElementById('allTimeHappy').textContent = stats.happy || 0;
+        document.getElementById('allTimeNeutral').textContent = stats.neutral || 0;
+        document.getElementById('allTimeSad').textContent = stats.sad || 0;
+        document.getElementById('allTimeTotal').textContent = stats.total || 0;
     }
 
     function fetchCalendar(year, month) {
         fetch(`/get_calendar_data?year=${year}&month=${month}`)
-        .then(res => res.json())
-        .then(data => {
-            if(data.error) {
-                alert(data.error);
-                return;
-            }
-            renderCalendar(data);
-        })
-        .catch(() => alert('Ошибка при загрузке данных календаря'));
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    renderCalendar(data);
+                }
+            })
+            .catch(() => alert('Ошибка при загрузке данных календаря'));
     }
 
     function changeMonth(delta) {
         let newMonth = currentMonth + delta;
         let newYear = currentYear;
 
-        if(newMonth < 1) {
+        if (newMonth < 1) {
             newMonth = 12;
             newYear--;
-        } else if(newMonth > 12) {
+        } else if (newMonth > 12) {
             newMonth = 1;
             newYear++;
         }
@@ -271,12 +267,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                date: date,
-                mood: mood,
-                comment: comment,
-                user_id: userId
-            })
+            body: new URLSearchParams({ date, mood, comment, user_id: userId })
         })
         .then(res => {
             if (res.ok) {
@@ -302,12 +293,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                date: dateStr,
-                mood: mood,
-                comment: comment,
-                user_id: userId
-            })
+            body: new URLSearchParams({ date: dateStr, mood, comment, user_id: userId })
         })
         .then(res => {
             if (res.ok) {
@@ -339,31 +325,22 @@
         .catch(() => alert('Ошибка сети при очистке настроений'));
     });
 
-    // Переключение темы с сохранением в localStorage
+    // Переключение темы
     const toggle = document.getElementById('themeSwitch');
-
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        toggle.checked = (theme === 'light');
+        if (toggle) toggle.checked = (theme === 'light');
     }
 
-    // Инициализация темы при загрузке страницы
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        applyTheme(savedTheme);
+    if (toggle) {
+        toggle.addEventListener('change', () => {
+            const newTheme = toggle.checked ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
 
-        // Загружаем календарь текущего месяца
-        const now = new Date();
-        fetchCalendar(now.getFullYear(), now.getMonth() + 1);
-    });
-
-    toggle.addEventListener('change', () => {
-        const newTheme = toggle.checked ? 'light' : 'dark';
-        applyTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-    });
-
-    // Логика меню гамбургер и вкладок
+    // Меню и вкладки
     const menuToggle = document.getElementById('menuToggle');
     const menuPanel = document.getElementById('menuPanel');
     const tabButtons = document.querySelectorAll('.tabBtn');
@@ -371,18 +348,27 @@
 
     menuToggle.onclick = () => {
         menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block';
-    }
+    };
 
     tabButtons.forEach(btn => {
         btn.onclick = () => {
             tabButtons.forEach(b => b.classList.remove('active'));
             tabContents.forEach(c => c.classList.remove('active'));
-
             btn.classList.add('active');
             document.getElementById(btn.dataset.tab).classList.add('active');
-        }
+        };
+    });
+
+    // Инициализация при загрузке
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+
+        const now = new Date();
+        fetchCalendar(now.getFullYear(), now.getMonth() + 1);
     });
 </script>
+
 
 </body>
 </html>
