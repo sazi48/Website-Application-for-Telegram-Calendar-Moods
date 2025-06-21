@@ -1219,7 +1219,6 @@ input:checked + .slider:before {
   }
 
   #menuPanel {
-    width: 80vw !important;
-    left: 5vw !important;
+    width: 85vw !important;
   }
 }
