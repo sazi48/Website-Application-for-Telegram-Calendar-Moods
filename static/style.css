@@ -822,11 +822,6 @@ input:checked + .slider:before {
     z-index: 1000;
     color: var(--text);
 }
-.tabs {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
-}
 .tabBtn {
     flex: 1;
     padding: 6px 10px;
@@ -1124,7 +1119,7 @@ input:checked + .slider:before {
 }
 .tabBtn {
     flex: 1;
-    padding: 3px 5px;
+    padding: 6px 10px;
     background: #555;
     border: none;
     border-radius: 6px;
@@ -1206,6 +1201,11 @@ input:checked + .slider:before {
     margin-bottom: 10px;
   }
 
+  .tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 7px;
+  }
   .month-navigation button,
   #clearAllBtn {
     font-size: 16px !important;
