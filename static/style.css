@@ -1269,5 +1269,6 @@ input:checked + .slider:before {
   .HEAD h1 {
     margin-top: 20px;
     font-size: 1.4rem;
+    padding-right: 60px;
   }
 }
