@@ -70,7 +70,8 @@
     }
 
     let currentYear, currentMonth;
-    const userId = "default_user"; // здесь можно подставить реальный user_id
+    // Замените "123456789" на реальный user_id из Telegram или другого источника
+    const userId = "123456789";
 
     function renderCalendar(data) {
         const container = document.getElementById('calendarContainer');
@@ -161,7 +162,8 @@
     }
 
     function fetchCalendar(year, month) {
-        fetch(`/get_calendar_data?year=${year}&month=${month}`)
+        // Добавляем userId в GET параметры
+        fetch(`/get_calendar_data?year=${year}&month=${month}&user_id=${encodeURIComponent(userId)}`)
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
@@ -206,6 +208,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            // Добавляем user_id в тело POST
             body: new URLSearchParams({ date, mood, comment, user_id: userId })
         })
         .then(res => {
@@ -232,6 +235,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            // Добавляем user_id в тело POST
             body: new URLSearchParams({ date: dateStr, mood, comment, user_id: userId })
         })
         .then(res => {
@@ -250,6 +254,7 @@
         fetch('/clear_all_moods', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            // Добавляем user_id в тело POST
             body: new URLSearchParams({ user_id: userId })
         })
         .then(res => res.json())
@@ -307,6 +312,7 @@
         fetchCalendar(now.getFullYear(), now.getMonth() + 1);
     });
 </script>
+
 <script>
 const moodMessages = {
     happy: [
