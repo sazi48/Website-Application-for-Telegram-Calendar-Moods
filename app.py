@@ -40,20 +40,41 @@ def calculate_mood_level(moods):
     return round(level)
 
 def get_all_time_stats(user_id):
+    """
+    Правильный подсчет настроений за все время:
+    Учитываем по каждой дате только последнее состояние.
+    """
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+
+    # Получаем последние записи настроения для каждого дня
     cursor.execute("""
-        SELECT mood, COUNT(*) FROM moods
+        SELECT date, mood FROM moods
         WHERE user_id = ? AND mood IN ('happy', 'neutral', 'sad')
-        GROUP BY mood
+        GROUP BY date
+        HAVING MAX(id)
     """, (user_id,))
     rows = cursor.fetchall()
+
+    # Альтернативный запрос, если выше не сработает (sqlite не поддерживает HAVING MAX(id) так просто):
+    # Можно выбрать последние записи через подзапрос, например:
+
+    cursor.execute("""
+        SELECT m.date, m.mood FROM moods m
+        INNER JOIN (
+            SELECT date, MAX(id) as max_id FROM moods
+            WHERE user_id = ? AND mood IN ('happy', 'neutral', 'sad')
+            GROUP BY date
+        ) sub ON m.id = sub.max_id
+    """, (user_id,))
+    rows = cursor.fetchall()
+
     conn.close()
 
     stats = {"happy": 0, "neutral": 0, "sad": 0, "total": 0}
-    for mood, count in rows:
-        stats[mood] = count
-        stats["total"] += count
+    for mood_date, mood_val in rows:
+        stats[mood_val] = stats.get(mood_val, 0) + 1
+        stats["total"] += 1
     return stats
 
 def get_all_time_comments(user_id):
@@ -67,7 +88,6 @@ def get_all_time_comments(user_id):
     rows = cursor.fetchall()
     conn.close()
 
-    # Вернуть список словарей с датой и комментом
     return [{"date": row[0], "comment": row[1]} for row in rows]
 
 @app.route('/')
@@ -85,7 +105,26 @@ def submit_mood():
     date = request.form['date']
     mood = request.form['mood']
     comment = request.form.get('comment', '')
-    add_mood(user_id, date, mood, comment)
+
+    # Обновляем запись, если есть, иначе создаём
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    # Проверяем, есть ли запись на эту дату
+    cursor.execute("SELECT id FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
+    row = cursor.fetchone()
+    if row:
+        cursor.execute("""
+            UPDATE moods SET mood = ?, comment = ?
+            WHERE id = ?
+        """, (mood, comment, row[0]))
+    else:
+        cursor.execute("""
+            INSERT INTO moods (user_id, date, mood, comment)
+            VALUES (?, ?, ?, ?)
+        """, (user_id, date, mood, comment))
+    conn.commit()
+    conn.close()
+
     return '', 200
 
 @app.route('/get_mood_level')

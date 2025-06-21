@@ -1064,6 +1064,66 @@ input:checked + .slider:before {
     background-color: var(--sad);
     color: #fff;
 }
+.day .day-number {
+    font-size: 1.8rem !important; /* было 1.4rem или 1.6rem */
+    font-weight: 700;
+}
+/* Кнопки эмоций в форме */
+.mood-form .emoji-buttons button {
+    font-size: 32px !important;  /* с 28px до 32px */
+    padding: 18px !important;
+    margin: 0 6px !important;
+    border-radius: 10px !important;
+}
+
+/* Кнопки комментариев */
+.comment-buttons button {
+    font-size: 18px !important;  /* с 16px до 18px */
+    padding: 14px 20px !important;
+    border-radius: 10px !important;
+}
+
+/* Кнопка очистки */
+#clearAllBtn {
+    font-size: 22px !important;   /* с 20px до 22px */
+    padding: 18px 28px !important;
+    border-radius: 12px !important;
+}
+
+/* Навигационные кнопки (месяц вперед/назад) */
+.month-navigation button {
+    font-size: 18px !important; /* с 16px до 18px */
+    padding: 12px 20px !important;
+    border-radius: 10px !important;
+}
+#menuToggle {
+    font-size: 40px !important; /* с 24px или 36px до 40px */
+    top: 12px !important;
+    left: 12px !important;
+    padding: 8px !important;
+    z-index: 1100;
+    color: var(--text);
+}
+
+/* Для мобильных */
+@media (max-width: 480px) {
+  #menuToggle {
+    font-size: 48px !important;
+    top: 10px !important;
+    left: 10px !important;
+    padding: 10px !important;
+  }
+
+  #menuPanel {
+    width: 95vw !important;
+    max-height: 75vh !important;
+    left: 2.5vw !important;
+    border-radius: 14px !important;
+    font-size: 20px !important;
+    padding: 20px !important;
+  }
+}
+
 /* Адаптив для мобильных */
 @media (max-width: 480px) {
   /* Увеличиваем меню гамбургер */
@@ -1166,5 +1226,44 @@ input:checked + .slider:before {
     transform: translateX(32px) !important;
   }
 }
+@media (max-width: 600px) {
+    .HEAD {
+        padding: 10px;
+        gap: 10px;
+    }
 
+    .HEAD h1 {
+        font-size: 1em;
+    }
 
+    .HEAD .month-navigation {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .HEAD button {
+        width: 100%;
+        padding: 8px;
+        font-size: 1em;
+    }
+
+    .HEAD .theme-toggle {
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .HEAD .mood-percentage {
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+    .HEAD .mood-bar {
+        max-width: 100%;
+    }
+
+    .HEAD #clearAllBtn {
+        width: 100%;
+        font-size: 1em;
+    }
+}
