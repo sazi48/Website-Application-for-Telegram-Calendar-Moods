@@ -103,39 +103,31 @@ def index():
 @app.route('/submit_mood', methods=['POST'])
 def submit_mood():
     user_id = request.form.get("user_id", "default_user")
-    username = request.form.get("username", "")
+    username = request.form.get("username", "")  # Получаем username
     date = request.form['date']
-    mood = request.form.get('mood')  # может быть None
-    comment = request.form.get('comment', '')  # по умолчанию пустая строка
+    mood = request.form['mood']
+    comment = request.form.get('comment', '')
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("SELECT id FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
     row = cursor.fetchone()
-
     if row:
-        if mood is not None and comment != '':
-            cursor.execute("UPDATE moods SET mood = ?, comment = ?, username = ? WHERE id = ?", (mood, comment, username, row[0]))
-        elif mood is not None:
-            cursor.execute("UPDATE moods SET mood = ?, username = ? WHERE id = ?", (mood, username, row[0]))
-        elif comment != '':
-            cursor.execute("UPDATE moods SET comment = ?, username = ? WHERE id = ?", (comment, username, row[0]))
-        # если ни mood, ни comment — ничего не делаем
+        cursor.execute("""
+            UPDATE moods SET mood = ?, comment = ?, username = ?
+            WHERE id = ?
+        """, (mood, comment, username, row[0]))
     else:
         cursor.execute("""
             INSERT INTO moods (user_id, username, date, mood, comment)
             VALUES (?, ?, ?, ?, ?)
-        """, (user_id, username, date, mood or '', comment))
+        """, (user_id, username, date, mood, comment))
 
     conn.commit()
     conn.close()
+
     return '', 200
-
-
-@app.route('/privacy')
-def privacy():
-    return render_template('privacy.html')
 
 @app.route('/get_mood_level')
 def get_mood_level():
