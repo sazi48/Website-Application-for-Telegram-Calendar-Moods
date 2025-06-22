@@ -251,7 +251,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ date, mood, comment, user_id: userId, username })
+            body: new URLSearchParams({ date, mood, comment, user_id: userId, username: username })
         })
         .then(res => {
             if (res.ok) {
@@ -277,7 +277,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ date: dateStr, mood, comment, user_id: userId, username })
+            body: new URLSearchParams({ date, mood, comment, user_id: userId, username: username })
         })
         .then(res => {
             if (res.ok) {
@@ -295,7 +295,7 @@
         fetch('/clear_all_moods', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ user_id: userId, username })
+            body: new URLSearchParams({ user_id: userId, username: username })
         })
         .then(res => res.json())
         .then(data => {

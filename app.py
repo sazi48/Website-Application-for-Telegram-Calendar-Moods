@@ -103,26 +103,27 @@ def index():
 @app.route('/submit_mood', methods=['POST'])
 def submit_mood():
     user_id = request.form.get("user_id", "default_user")
+    username = request.form.get("username", "")  # Получаем username
     date = request.form['date']
     mood = request.form['mood']
     comment = request.form.get('comment', '')
 
-    # Обновляем запись, если есть, иначе создаём
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    # Проверяем, есть ли запись на эту дату
+
     cursor.execute("SELECT id FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
     row = cursor.fetchone()
     if row:
         cursor.execute("""
-            UPDATE moods SET mood = ?, comment = ?
+            UPDATE moods SET mood = ?, comment = ?, username = ?
             WHERE id = ?
-        """, (mood, comment, row[0]))
+        """, (mood, comment, username, row[0]))
     else:
         cursor.execute("""
-            INSERT INTO moods (user_id, date, mood, comment)
-            VALUES (?, ?, ?, ?)
-        """, (user_id, date, mood, comment))
+            INSERT INTO moods (user_id, username, date, mood, comment)
+            VALUES (?, ?, ?, ?, ?)
+        """, (user_id, username, date, mood, comment))
+
     conn.commit()
     conn.close()
 
