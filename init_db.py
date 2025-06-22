@@ -8,6 +8,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS moods (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL,
+    username TEXT NOT NULL,
     date TEXT NOT NULL,
     mood TEXT NOT NULL,
     comment TEXT
