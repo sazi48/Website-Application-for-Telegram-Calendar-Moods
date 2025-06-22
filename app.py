@@ -8,7 +8,6 @@ from telegram.ext import Updater, CommandHandler
 import os
 
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
-ADMIN_USER_IDS = {"870004624"}  # замените на свой Telegram user_id (число)
 
 def start(update, context):
     keyboard = [
@@ -198,69 +197,6 @@ def get_calendar_data():
         "all_time_stats": all_time_stats,
         "all_time_comments": all_time_comments
     })
-
-@app.route('/admin/users')
-def admin_users():
-    from flask import request, jsonify
-    import sqlite3
-
-    try:
-        page = int(request.args.get('page', 1))
-        per_page = int(request.args.get('per_page', 50))
-        search_user = request.args.get('search_user', '').strip()
-        search_date = request.args.get('search_date', '').strip()
-        requester_user_id = request.args.get('user_id', '')
-
-        # Только admin (вписан вручную)
-        requester_user_id = request.args.get('user_id', '')
-        if requester_user_id not in ADMIN_USER_IDS:
-            return jsonify({'error': 'Доступ запрещён'}), 403
-
-        conn = sqlite3.connect(DB_PATH)
-
-        c = conn.cursor()
-
-        base_query = "SELECT id, user_id, date, mood, comment FROM moods WHERE 1=1"
-        params = []
-
-        if search_user:
-            base_query += " AND user_id LIKE ?"
-            params.append(f"%{search_user}%")
-
-        if search_date:
-            base_query += " AND date = ?"
-            params.append(search_date)
-
-        count_query = f"SELECT COUNT(*) FROM ({base_query})"
-        c.execute(count_query, params)
-        total_count = c.fetchone()[0]
-
-        base_query += " ORDER BY date DESC LIMIT ? OFFSET ?"
-        params += [per_page, (page - 1) * per_page]
-
-        c.execute(base_query, params)
-        rows = c.fetchall()
-
-        data = []
-        for row in rows:
-            data.append({
-                'id': row[0],
-                'user_id': row[1],
-                'date': row[2],
-                'mood': row[3],
-                'comment': row[4]
-            })
-
-        return jsonify({
-            'data': data,
-            'page': page,
-            'per_page': per_page,
-            'total_count': total_count
-        })
-
-    except Exception as e:
-        return jsonify({'error': f'Ошибка сервера: {str(e)}'}), 500
-
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
