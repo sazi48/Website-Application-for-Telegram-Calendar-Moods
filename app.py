@@ -250,9 +250,6 @@ def admin_users():
                 'mood': row[3],
                 'comment': row[4]
             })
-        print("[DEBUG] user_id:", requester_user_id)
-        print("[DEBUG] total_count:", total_count)
-        print("[DEBUG] rows:", rows)
 
         return jsonify({
             'data': data,
@@ -262,9 +259,6 @@ def admin_users():
         })
 
     except Exception as e:
-        print("[DEBUG] user_id:", requester_user_id)
-        print("[DEBUG] total_count:", total_count)
-        print("[DEBUG] rows:", rows)
         return jsonify({'error': f'Ошибка сервера: {str(e)}'}), 500
 
 

@@ -17,7 +17,6 @@
           </label>
         </div>
 
-
         <!-- Кнопка гамбургер -->
         <div id="menuToggle">&#9776;</div>
         <h1>Календарь — <span id="localMonthYear"></span></h1>
@@ -48,42 +47,43 @@
               <h4 style="margin: 0 0 6px 0;">Комментарии за всё время:</h4>
               <ul id="allTimeCommentsList" style="list-style: disc; padding-left: 20px; margin: 0; color: var(--text);"></ul>
             </div>
-              <div style="position: relative; height: 250px; margin-top: 20px;">
-                  <canvas id="moodChart"></canvas>
-              </div>
+            <div style="position: relative; height: 250px; margin-top: 20px;">
+              <canvas id="moodChart"></canvas>
+            </div>
           </div>
-            <!-- Сама панель -->
-        <div class="tabContent" id="adminPanel" style="display:none;">
-          <h3>Панель администратора</h3>
+          <!-- Убрано style="display:none;" чтобы переключение работало -->
+          <div class="tabContent" id="adminPanel">
+            <h3>Панель администратора</h3>
 
-          <div style="margin-bottom: 10px;">
-            <input type="text" id="searchUserInput" placeholder="Поиск по user_id" style="margin-right: 5px;">
-            <input type="date" id="searchDateInput" style="margin-right: 5px;">
-            <button id="searchBtn">🔍 Поиск</button>
-          </div>
+            <div style="margin-bottom: 10px;">
+              <input type="text" id="searchUserInput" placeholder="Поиск по user_id" style="margin-right: 5px;">
+              <input type="date" id="searchDateInput" style="margin-right: 5px;">
+              <button id="searchBtn">🔍 Поиск</button>
+            </div>
 
-          <table id="adminTable" style="width: 100%; border-collapse: collapse;">
-            <thead>
-              <tr>
-                <th style="border-bottom: 1px solid var(--text); padding: 6px;">ID</th>
-                <th style="border-bottom: 1px solid var(--text); padding: 6px;">User ID</th>
-                <th style="border-bottom: 1px solid var(--text); padding: 6px;">Дата</th>
-                <th style="border-bottom: 1px solid var(--text); padding: 6px;">Настроение</th>
-                <th style="border-bottom: 1px solid var(--text); padding: 6px;">Комментарий</th>
-              </tr>
-            </thead>
-            <tbody id="adminTableBody">
-              <tr><td colspan="5" style="text-align:center;">Данные не загружены</td></tr>
-            </tbody>
-          </table>
+            <table id="adminTable" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th style="border-bottom: 1px solid var(--text); padding: 6px;">ID</th>
+                  <th style="border-bottom: 1px solid var(--text); padding: 6px;">User ID</th>
+                  <th style="border-bottom: 1px solid var(--text); padding: 6px;">Дата</th>
+                  <th style="border-bottom: 1px solid var(--text); padding: 6px;">Настроение</th>
+                  <th style="border-bottom: 1px solid var(--text); padding: 6px;">Комментарий</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody">
+                <tr><td colspan="5" style="text-align:center;">Данные не загружены</td></tr>
+              </tbody>
+            </table>
 
-          <div style="margin-top: 10px;">
-            <button id="prevPageBtn" type="button">← Назад</button>
-            <span id="pageInfo" style="margin: 0 10px;">Страница 1</span>
-            <button id="nextPageBtn" type="button">Вперёд →</button>
+            <div style="margin-top: 10px;">
+              <button id="prevPageBtn" type="button">← Назад</button>
+              <span id="pageInfo" style="margin: 0 10px;">Страница 1</span>
+              <button id="nextPageBtn" type="button">Вперёд →</button>
+            </div>
           </div>
         </div>
-        </div>
+
         <div class="month-navigation" style="text-align: center; margin-bottom: 15px;">
           <button id="prevMonthBtn">← Предыдущий</button>
           <button id="nextMonthBtn">Следующий →</button>
@@ -100,6 +100,30 @@
         <!-- Календарь будет отрисован сюда через JS -->
     </div>
 
+<script>
+    // ...весь твой существующий JS сверху...
+
+    // Переключение вкладок с исправлением показа/скрытия
+    const tabButtons = document.querySelectorAll('.tabBtn');
+    const tabContents = document.querySelectorAll('.tabContent');
+
+    tabButtons.forEach(btn => {
+        btn.onclick = () => {
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => {
+                c.classList.remove('active');
+                c.style.display = 'none'; // скрываем все вкладки
+            });
+            btn.classList.add('active');
+            const activeTab = document.getElementById(btn.dataset.tab);
+            activeTab.classList.add('active');
+            activeTab.style.display = 'block'; // показываем активную вкладку
+        };
+    });
+
+    // Остальной твой JS (например, смена темы, загрузка календаря и т.д.) остаётся без изменений
+
+</script>
 <script>
     function pad(n) {
         return n < 10 ? '0' + n : n;
