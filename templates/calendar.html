@@ -28,6 +28,7 @@
             <button class="tabBtn active" data-tab="counts">Количество дней</button>
             <button class="tabBtn" data-tab="comments">Комментарии</button>
             <button class="tabBtn" data-tab="allTimeStats">Статистика за всё время</button>
+            <button class="tabBtn" id="adminPanelBtn" data-tab="adminPanel" style="display:none;">Админ-панель</button>
           </div>
 
           <div class="tabContent active" id="counts">
@@ -49,8 +50,10 @@
             </div>
               <div style="position: relative; height: 250px; margin-top: 20px;">
                   <canvas id="moodChart"></canvas>
-                </div>
-
+            </div>
+            <div class="tabContent" id="adminPanel" style="max-height: 400px; overflow-y: auto; display:none;">
+              <iframe id="adminIframe" style="width: 100%; height: 500px; border: none;"></iframe>
+            </div>
           </div>
         </div>
 
@@ -77,6 +80,29 @@
 
     let currentYear, currentMonth;
     let userId = "default_user";
+    document.addEventListener('DOMContentLoaded', () => {
+      // Текущие настройки темы и вызов fetchCalendar уже есть в твоём коде, не забудь вызвать их тоже
+
+      // Проверка, если пользователь — админ
+      if(userId === "870004624") {
+        const adminBtn = document.getElementById('adminPanelBtn');
+        adminBtn.style.display = 'inline-block';
+
+        adminBtn.addEventListener('click', () => {
+          // Снимаем active с других кнопок и контента
+          document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
+          // Активируем админ-кнопку и контент
+          adminBtn.classList.add('active');
+          const adminContent = document.getElementById('adminPanel');
+          adminContent.style.display = 'block';
+          adminContent.classList.add('active');
+
+          // Загрузить страницу админки с user_id
+          document.getElementById('adminIframe').src = `/admin?user_id=${userId}`;
+        });
+      }
+    });
 
     // Попытка получить user_id из Telegram WebApp API
     if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe?.user?.id) {
