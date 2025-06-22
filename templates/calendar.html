@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Календарь настроения</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <header class="HEAD">
@@ -70,7 +71,12 @@
     }
 
     let currentYear, currentMonth;
-    const userId = "default_user"; // здесь можно подставить реальный user_id
+    let userId = "default_user";
+
+    // Попытка получить user_id из Telegram WebApp API
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe?.user?.id) {
+        userId = Telegram.WebApp.initDataUnsafe.user.id.toString();
+    }
 
     function renderCalendar(data) {
         const container = document.getElementById('calendarContainer');
@@ -161,7 +167,7 @@
     }
 
     function fetchCalendar(year, month) {
-        fetch(`/get_calendar_data?year=${year}&month=${month}`)
+        fetch(`/get_calendar_data?year=${year}&month=${month}&user_id=${userId}`)
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
