@@ -278,21 +278,9 @@
             date: dateStr,
             user_id: userId,
             username: username,
+            comment: comment.trim(),           // всегда отправляем, может быть пустым
+            mood: mood || ''                   // если mood null, отправляем пустую строку
         });
-
-        // Добавляем только если есть mood или comment
-        if (comment.trim() !== '') {
-            formData.append('comment', comment);
-        }
-        if (mood !== null) {
-            formData.append('mood', mood);
-        }
-
-        // Если и mood, и comment отсутствуют — просто закрываем форму
-        if (!mood && comment.trim() === '') {
-            dayDiv.querySelector('.mood-form').classList.add('hidden');
-            return;
-        }
 
         fetch('/submit_mood', {
             method: 'POST',
@@ -308,6 +296,8 @@
         })
         .catch(() => alert('Ошибка сети при сохранении'));
     }
+
+
 
 
 

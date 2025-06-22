@@ -1,4 +1,3 @@
-# init_db.py
 import sqlite3
 
 conn = sqlite3.connect("database.db")
@@ -10,8 +9,8 @@ CREATE TABLE IF NOT EXISTS moods (
     user_id TEXT NOT NULL,
     username TEXT NOT NULL,
     date TEXT NOT NULL,
-    mood TEXT NOT NULL,
-    comment TEXT,
+    mood TEXT NOT NULL DEFAULT '',   -- дефолт пустая строка
+    comment TEXT NOT NULL DEFAULT '', -- дефолт пустая строка
     status TEXT NOT NULL DEFAULT 'active'
 )
 """)

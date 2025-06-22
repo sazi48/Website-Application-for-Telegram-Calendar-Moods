@@ -6,10 +6,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <style>
         .deleted {
-            color: gray;
+            color: red;
         }
         .edited {
-            background-color: #454545
+            color: #ffff00;
+        }
+        .active {
+            color: #2ecc71; /* зеленый цвет текста */
+            /* Или можно фон: background-color: #144d14; */
         }
     </style>
 </head>
@@ -29,7 +33,7 @@
         </thead>
         <tbody>
             {% for id, user_id, username, date, mood, comment, status in records %}
-            <tr class="{% if status == 'deleted' %}deleted{% elif status == 'edited' %}edited{% endif %}">
+            <tr class="{% if status == 'deleted' %}deleted{% elif status == 'edited' %}edited{% elif status == 'active' %}active{% endif %}">
                 <td>{{ id }}</td>
                 <td>{{ user_id }}</td>
                 <td>{{ username or '' }}</td>

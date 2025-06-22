@@ -105,8 +105,15 @@ def submit_mood():
     user_id = request.form.get("user_id", "default_user")
     username = request.form.get("username", "")  # Получаем username
     date = request.form['date']
-    mood = request.form['mood']
-    comment = request.form.get('comment', '')
+    mood = request.form.get('mood', '')  # get с дефолтом пустая строка
+    comment = request.form.get('comment', '')  # get с дефолтом пустая строка
+
+    # Если mood не входит в список допустимых — делаем пустой (для безопасности)
+    if mood not in ('happy', 'neutral', 'sad'):
+        mood = ''
+
+    if comment is None:
+        comment = ''
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -114,7 +121,6 @@ def submit_mood():
     cursor.execute("SELECT id, status FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
     row = cursor.fetchone()
     if row:
-        # Если статус deleted — считаем, что пользователь "восстанавливает" запись, ставим active
         new_status = 'active' if row[1] == 'deleted' else 'edited'
         cursor.execute("""
             UPDATE moods SET mood = ?, comment = ?, username = ?, status = ?
@@ -130,6 +136,7 @@ def submit_mood():
     conn.close()
 
     return '', 200
+
 
 
 @app.route('/get_mood_level')
