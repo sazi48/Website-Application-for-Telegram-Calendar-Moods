@@ -355,20 +355,7 @@ function showMoodMessage(mood) {
     if (!messageList) return;
 
     const message = messageList[Math.floor(Math.random() * messageList.length)];
-
-    const msgBox = document.createElement("div");
-    msgBox.className = `mood-popup ${mood}`;
-    msgBox.textContent = message;
-    document.body.appendChild(msgBox);
-
-    setTimeout(() => {
-        msgBox.classList.add('visible');
-    }, 10); // дожидаемся рендера
-
-    setTimeout(() => {
-        msgBox.classList.remove('visible');
-        setTimeout(() => msgBox.remove(), 500); // удаляем после анимации исчезновения
-    }, 2000);
+    alert(message);
 }
 </script>
 
