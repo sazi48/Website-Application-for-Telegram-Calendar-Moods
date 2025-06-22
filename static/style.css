@@ -1441,3 +1441,35 @@ a {
 a:hover {
     text-decoration: underline;
 }
+.footer {
+    font-size: 0.85em;
+    color: var(--text, #aaa);
+    text-align: center;
+    padding: 20px 10px;
+    opacity: 0.7;
+}
+
+.footer a {
+    color: var(--text, #aaa);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+#donateBtn {
+    font-size: 0.9em;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background-color: var(--happy, #2ecc71);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#donateBtn:hover {
+    background-color: #27ae60;
+}

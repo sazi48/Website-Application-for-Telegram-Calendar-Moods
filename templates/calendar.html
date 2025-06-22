@@ -269,38 +269,47 @@
         const commentInput = dayDiv.querySelector('.comment-input');
         const comment = commentInput.value;
 
-        // Проверяем, выбрано ли настроение
-        let mood = '';
+        let mood = null;
         if (dayDiv.classList.contains('happy')) mood = 'happy';
         else if (dayDiv.classList.contains('neutral')) mood = 'neutral';
         else if (dayDiv.classList.contains('sad')) mood = 'sad';
 
-        // Если настроение не задано — не отправляем
-        if (!mood) {
-            alert('Пожалуйста, выберите настроение перед сохранением комментария.');
+        const formData = new URLSearchParams({
+            date: dateStr,
+            user_id: userId,
+            username: username,
+        });
+
+        // Добавляем только если есть mood или comment
+        if (comment.trim() !== '') {
+            formData.append('comment', comment);
+        }
+        if (mood !== null) {
+            formData.append('mood', mood);
+        }
+
+        // Если и mood, и comment отсутствуют — просто закрываем форму
+        if (!mood && comment.trim() === '') {
+            dayDiv.querySelector('.mood-form').classList.add('hidden');
             return;
         }
 
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                date: dateStr,
-                mood: mood,
-                comment: comment,
-                user_id: userId,
-                username: username
-            })
+            body: formData
         })
         .then(res => {
             if (res.ok) {
                 fetchCalendar(currentYear, currentMonth);
             } else {
-                alert('Ошибка при сохранении комментария');
+                alert('Ошибка при сохранении');
             }
         })
-        .catch(() => alert('Ошибка сети при сохранении комментария'));
+        .catch(() => alert('Ошибка сети при сохранении'));
     }
+
+
 
 
     document.getElementById('clearAllBtn').addEventListener('click', () => {
