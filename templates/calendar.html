@@ -269,15 +269,28 @@
         const commentInput = dayDiv.querySelector('.comment-input');
         const comment = commentInput.value;
 
+        // Проверяем, выбрано ли настроение
         let mood = '';
-        ['happy', 'neutral', 'sad'].forEach(c => {
-            if (dayDiv.classList.contains(c)) mood = c;
-        });
+        if (dayDiv.classList.contains('happy')) mood = 'happy';
+        else if (dayDiv.classList.contains('neutral')) mood = 'neutral';
+        else if (dayDiv.classList.contains('sad')) mood = 'sad';
+
+        // Если настроение не задано — не отправляем
+        if (!mood) {
+            alert('Пожалуйста, выберите настроение перед сохранением комментария.');
+            return;
+        }
 
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ date, mood, comment, user_id: userId, username: username })
+            body: new URLSearchParams({
+                date: dateStr,
+                mood: mood,
+                comment: comment,
+                user_id: userId,
+                username: username
+            })
         })
         .then(res => {
             if (res.ok) {
@@ -288,6 +301,7 @@
         })
         .catch(() => alert('Ошибка сети при сохранении комментария'));
     }
+
 
     document.getElementById('clearAllBtn').addEventListener('click', () => {
         if (!confirm('Вы уверены, что хотите очистить все настроения?')) return;

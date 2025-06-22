@@ -1,21 +1,76 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg, #111);
+            color: var(--text, #fff);
+        }
+
+        .policy-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.05em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 25px;
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        a.back:hover {
+            color: #fff;
+        }
+    </style>
 </head>
-<body3>
+<body>
     <div class="policy-container">
-        <h3>Политика конфиденциальности</h3>
+        <h1>Политика конфиденциальности</h1>
         <p>Мы собираем и храним следующие данные пользователей:</p>
         <ul>
             <li><strong>user_id</strong> — идентификатор Telegram-пользователя</li>
-            <li><strong>username</strong> — имя пользователя Telegram (если есть)</li>
+            <li><strong>username</strong> — имя пользователя Telegram (если указано)</li>
             <li><strong>настроение и комментарии</strong>, введённые пользователем</li>
         </ul>
-        <p>Данные хранятся только для отображения календаря настроений и не передаются третьим лицам.</p>
-        <p>Вы можете удалить все свои данные, написав разработчику.</p>
+        <p>Данные используются исключительно для отображения календаря настроений и не передаются третьим лицам.</p>
+        <p>Вы можете запросить удаление всех своих данных, написав разработчику.</p>
+        <a href="/" class="back">← Вернуться в приложение</a>
     </div>
-</body3>
+</body>
 </html>
