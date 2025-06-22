@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS moods (
     username TEXT NOT NULL,
     date TEXT NOT NULL,
     mood TEXT NOT NULL,
-    comment TEXT
+    comment TEXT,
+    status TEXT NOT NULL DEFAULT 'active'
 )
 """)
 

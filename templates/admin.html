@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <title>Админ-панель - Все настроения</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+        .deleted {
+            color: gray;
+        }
+        .edited {
+            background-color: #fff3cd; /* светло-жёлтый фон */
+        }
+    </style>
 </head>
 <body>
     <h1>Админ-панель — все записи настроений</h1>
@@ -16,17 +24,27 @@
                 <th>Дата</th>
                 <th>Настроение</th>
                 <th>Комментарий</th>
+                <th>Статус</th>
             </tr>
         </thead>
         <tbody>
-            {% for id, user_id, username, date, mood, comment in records %}
-            <tr>
+            {% for id, user_id, username, date, mood, comment, status in records %}
+            <tr class="{% if status == 'deleted' %}deleted{% elif status == 'edited' %}edited{% endif %}">
                 <td>{{ id }}</td>
                 <td>{{ user_id }}</td>
                 <td>{{ username or '' }}</td>
                 <td>{{ date }}</td>
                 <td>{{ mood }}</td>
                 <td>{{ comment or '' }}</td>
+                <td>
+                    {% if status == 'deleted' %}
+                        Удалено
+                    {% elif status == 'edited' %}
+                        Изменено
+                    {% else %}
+                        Активно
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

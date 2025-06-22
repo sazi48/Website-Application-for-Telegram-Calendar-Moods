@@ -111,23 +111,26 @@ def submit_mood():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT id FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
+    cursor.execute("SELECT id, status FROM moods WHERE user_id = ? AND date = ?", (user_id, date))
     row = cursor.fetchone()
     if row:
+        # Если статус deleted — считаем, что пользователь "восстанавливает" запись, ставим active
+        new_status = 'active' if row[1] == 'deleted' else 'edited'
         cursor.execute("""
-            UPDATE moods SET mood = ?, comment = ?, username = ?
+            UPDATE moods SET mood = ?, comment = ?, username = ?, status = ?
             WHERE id = ?
-        """, (mood, comment, username, row[0]))
+        """, (mood, comment, username, new_status, row[0]))
     else:
         cursor.execute("""
-            INSERT INTO moods (user_id, username, date, mood, comment)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO moods (user_id, username, date, mood, comment, status)
+            VALUES (?, ?, ?, ?, ?, 'active')
         """, (user_id, username, date, mood, comment))
 
     conn.commit()
     conn.close()
 
     return '', 200
+
 
 @app.route('/get_mood_level')
 def get_mood_level():
@@ -143,7 +146,7 @@ def clear_all_moods():
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM moods WHERE user_id = ?", (user_id,))
+        cursor.execute("UPDATE moods SET status = 'deleted' WHERE user_id = ?", (user_id,))
         conn.commit()
         conn.close()
         return jsonify({"status": "ok"}), 200
@@ -202,21 +205,18 @@ def get_calendar_data():
 
 @app.route('/admin')
 def admin_panel():
-    # В идеале получать user_id из сессии или заголовка, у тебя же сейчас user_id передается в запросах.
-    # Можно реализовать простой способ — получить user_id из query параметра или из запроса,
-    # но безопаснее — передавать через заголовки, токены или авторизацию.
-    # Для примера — возьмем user_id из query:
     user_id = request.args.get('user_id')
     if user_id != ADMIN_USER_ID:
         return "Доступ запрещён", 403
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, user_id, username, date, mood, comment FROM moods ORDER BY date DESC")
+    cursor.execute("SELECT id, user_id, username, date, mood, comment, status FROM moods ORDER BY date DESC")
     records = cursor.fetchall()
     conn.close()
 
     return render_template('admin.html', records=records)
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

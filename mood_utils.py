@@ -25,6 +25,7 @@ def get_month_moods(user_id, year, month):
     cursor.execute("""
         SELECT date, mood, comment FROM moods
         WHERE user_id = ? AND strftime('%Y', date) = ? AND strftime('%m', date) = ?
+        AND status IN ('active', 'edited')
     """, (user_id, str(year), f"{month:02d}"))
     rows = cursor.fetchall()
     conn.close()
