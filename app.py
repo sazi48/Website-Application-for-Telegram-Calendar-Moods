@@ -15,9 +15,9 @@ ADMIN_ID = "870004624"  # твой Telegram user_id
 
 @app.route('/admin')
 def admin_panel():
-    user_id = request.args.get('user_id')
-    if user_id != ADMIN_ID:
-        return "Доступ запрещён", 403
+    # user_id = request.args.get('user_id')
+    # if user_id != ADMIN_ID:
+    #     return "Доступ запрещён", 403
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -36,6 +36,7 @@ def admin_panel():
         data[u_id].append({"date": date, "mood": mood, "comment": comment or ""})
 
     return render_template("admin.html", data=data)
+
 def start(update, context):
     keyboard = [
         [InlineKeyboardButton(
