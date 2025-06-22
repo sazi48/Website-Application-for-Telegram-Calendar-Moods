@@ -212,6 +212,7 @@ def admin_users():
         requester_user_id = request.args.get('user_id', '')
 
         # Только admin (вписан вручную)
+        requester_user_id = str(request.args.get('user_id', ''))
         if requester_user_id not in ADMIN_USER_IDS:
             return jsonify({'error': 'Доступ запрещён'}), 403
 
