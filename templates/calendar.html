@@ -50,14 +50,18 @@
             </div>
               <div style="position: relative; height: 250px; margin-top: 20px;">
                   <canvas id="moodChart"></canvas>
-                </div>
-            <div class="tabContent" id="adminPanel" style="max-height: 400px; overflow-y: auto; color: var(--text); display:none;">
-              <h3>Админ-панель — все записи пользователей</h3>
-              <div style="margin-bottom:10px;">
-                <input type="text" id="searchUserInput" placeholder="Поиск по user_id" style="margin-right: 10px; padding: 4px;">
-                <input type="date" id="searchDateInput" style="margin-right: 10px; padding: 4px;">
-                <button id="searchBtn" type="button">Поиск</button>
               </div>
+
+            <!-- Сама панель -->
+            <div class="tabContent" id="adminPanel" style="display:none;">
+              <h3>Панель администратора</h3>
+
+              <div style="margin-bottom: 10px;">
+                <input type="text" id="searchUserInput" placeholder="Поиск по user_id" style="margin-right: 5px;">
+                <input type="date" id="searchDateInput" style="margin-right: 5px;">
+                <button id="searchBtn">🔍 Поиск</button>
+              </div>
+
               <table id="adminTable" style="width: 100%; border-collapse: collapse;">
                 <thead>
                   <tr>
@@ -72,6 +76,7 @@
                   <tr><td colspan="5" style="text-align:center;">Данные не загружены</td></tr>
                 </tbody>
               </table>
+
               <div style="margin-top: 10px;">
                 <button id="prevPageBtn" type="button">← Назад</button>
                 <span id="pageInfo" style="margin: 0 10px;">Страница 1</span>

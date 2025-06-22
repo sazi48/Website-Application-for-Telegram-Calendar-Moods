@@ -201,70 +201,65 @@ def get_calendar_data():
 
 @app.route('/admin/users')
 def admin_users():
-    user_id = request.args.get("user_id", "default_user")
+    from flask import request, jsonify
+    import sqlite3
+
     try:
-        # Проверка прав админа
-        if int(user_id) not in ADMIN_USER_IDS:
-            return jsonify({"error": "Access denied"}), 403
-    except Exception:
-        return jsonify({"error": "Invalid user_id"}), 400
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', 50))
+        search_user = request.args.get('search_user', '').strip()
+        search_date = request.args.get('search_date', '').strip()
+        requester_user_id = request.args.get('user_id', '')
 
-    # Параметры пагинации и фильтрации
-    page = int(request.args.get("page", 1))
-    per_page = int(request.args.get("per_page", 50))
-    search_user = request.args.get("search_user", "").strip()
-    search_date = request.args.get("search_date", "").strip()
+        # Только admin (вписан вручную)
+        admin_ids = ['536192763']
+        if requester_user_id not in admin_ids:
+            return jsonify({'error': 'Доступ запрещён'}), 403
 
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+        conn = sqlite3.connect('moods.db')
+        c = conn.cursor()
 
-    query = "SELECT id, user_id, date, mood, comment FROM moods WHERE 1=1"
-    params = []
+        base_query = "SELECT id, user_id, date, mood, comment FROM moods WHERE 1=1"
+        params = []
 
-    if search_user:
-        query += " AND user_id LIKE ?"
-        params.append(f"%{search_user}%")
-    if search_date:
-        query += " AND date = ?"
-        params.append(search_date)
+        if search_user:
+            base_query += " AND user_id LIKE ?"
+            params.append(f"%{search_user}%")
 
-    query += " ORDER BY date DESC, id DESC LIMIT ? OFFSET ?"
-    params.extend([per_page, per_page * (page -1)])
+        if search_date:
+            base_query += " AND date = ?"
+            params.append(search_date)
 
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
+        count_query = f"SELECT COUNT(*) FROM ({base_query})"
+        c.execute(count_query, params)
+        total_count = c.fetchone()[0]
 
-    # Получаем общее количество для пагинации
-    count_query = "SELECT COUNT(*) FROM moods WHERE 1=1"
-    count_params = []
-    if search_user:
-        count_query += " AND user_id LIKE ?"
-        count_params.append(f"%{search_user}%")
-    if search_date:
-        count_query += " AND date = ?"
-        count_params.append(search_date)
+        base_query += " ORDER BY date DESC LIMIT ? OFFSET ?"
+        params += [per_page, (page - 1) * per_page]
 
-    cursor.execute(count_query, count_params)
-    total_count = cursor.fetchone()[0]
+        c.execute(base_query, params)
+        rows = c.fetchall()
 
-    conn.close()
+        data = []
+        for row in rows:
+            data.append({
+                'id': row[0],
+                'user_id': row[1],
+                'date': row[2],
+                'mood': row[3],
+                'comment': row[4]
+            })
 
-    data = []
-    for r in rows:
-        data.append({
-            "id": r[0],
-            "user_id": r[1],
-            "date": r[2],
-            "mood": r[3],
-            "comment": r[4] or ""
+        return jsonify({
+            'data': data,
+            'page': page,
+            'per_page': per_page,
+            'total_count': total_count
         })
 
-    return jsonify({
-        "total_count": total_count,
-        "page": page,
-        "per_page": per_page,
-        "data": data
-    })
+    except Exception as e:
+        return jsonify({'error': f'Ошибка сервера: {str(e)}'}), 500
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
