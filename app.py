@@ -8,7 +8,7 @@ from telegram.ext import Updater, CommandHandler
 import os
 
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
-ADMIN_USER_IDS = {870004624}  # замените на свой Telegram user_id (число)
+ADMIN_USER_IDS = {"870004624"}  # замените на свой Telegram user_id (число)
 
 def start(update, context):
     keyboard = [
@@ -212,11 +212,11 @@ def admin_users():
         requester_user_id = request.args.get('user_id', '')
 
         # Только admin (вписан вручную)
-        admin_ids = ['536192763']
-        if requester_user_id not in admin_ids:
+        if requester_user_id not in ADMIN_USER_IDS:
             return jsonify({'error': 'Доступ запрещён'}), 403
 
-        conn = sqlite3.connect('moods.db')
+        conn = sqlite3.connect(DB_PATH)
+
         c = conn.cursor()
 
         base_query = "SELECT id, user_id, date, mood, comment FROM moods WHERE 1=1"
