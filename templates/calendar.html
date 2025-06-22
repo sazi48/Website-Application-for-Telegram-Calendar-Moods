@@ -51,42 +51,39 @@
               <div style="position: relative; height: 250px; margin-top: 20px;">
                   <canvas id="moodChart"></canvas>
               </div>
-
-            <!-- Сама панель -->
-            <div class="tabContent" id="adminPanel" style="display:none;">
-              <h3>Панель администратора</h3>
-
-              <div style="margin-bottom: 10px;">
-                <input type="text" id="searchUserInput" placeholder="Поиск по user_id" style="margin-right: 5px;">
-                <input type="date" id="searchDateInput" style="margin-right: 5px;">
-                <button id="searchBtn">🔍 Поиск</button>
-              </div>
-
-              <table id="adminTable" style="width: 100%; border-collapse: collapse;">
-                <thead>
-                  <tr>
-                    <th style="border-bottom: 1px solid var(--text); padding: 6px;">ID</th>
-                    <th style="border-bottom: 1px solid var(--text); padding: 6px;">User ID</th>
-                    <th style="border-bottom: 1px solid var(--text); padding: 6px;">Дата</th>
-                    <th style="border-bottom: 1px solid var(--text); padding: 6px;">Настроение</th>
-                    <th style="border-bottom: 1px solid var(--text); padding: 6px;">Комментарий</th>
-                  </tr>
-                </thead>
-                <tbody id="adminTableBody">
-                  <tr><td colspan="5" style="text-align:center;">Данные не загружены</td></tr>
-                </tbody>
-              </table>
-
-              <div style="margin-top: 10px;">
-                <button id="prevPageBtn" type="button">← Назад</button>
-                <span id="pageInfo" style="margin: 0 10px;">Страница 1</span>
-                <button id="nextPageBtn" type="button">Вперёд →</button>
-              </div>
-            </div>
-
           </div>
         </div>
+        <!-- Сама панель -->
+        <div class="tabContent" id="adminPanel" style="display:none;">
+          <h3>Панель администратора</h3>
 
+          <div style="margin-bottom: 10px;">
+            <input type="text" id="searchUserInput" placeholder="Поиск по user_id" style="margin-right: 5px;">
+            <input type="date" id="searchDateInput" style="margin-right: 5px;">
+            <button id="searchBtn">🔍 Поиск</button>
+          </div>
+
+          <table id="adminTable" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="border-bottom: 1px solid var(--text); padding: 6px;">ID</th>
+                <th style="border-bottom: 1px solid var(--text); padding: 6px;">User ID</th>
+                <th style="border-bottom: 1px solid var(--text); padding: 6px;">Дата</th>
+                <th style="border-bottom: 1px solid var(--text); padding: 6px;">Настроение</th>
+                <th style="border-bottom: 1px solid var(--text); padding: 6px;">Комментарий</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <tr><td colspan="5" style="text-align:center;">Данные не загружены</td></tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 10px;">
+            <button id="prevPageBtn" type="button">← Назад</button>
+            <span id="pageInfo" style="margin: 0 10px;">Страница 1</span>
+            <button id="nextPageBtn" type="button">Вперёд →</button>
+          </div>
+        </div>
         <div class="month-navigation" style="text-align: center; margin-bottom: 15px;">
           <button id="prevMonthBtn">← Предыдущий</button>
           <button id="nextMonthBtn">Следующий →</button>
