@@ -1442,7 +1442,7 @@ a:hover {
     text-decoration: underline;
 }
 
-body {
+body3 {
     font-family: Arial, sans-serif;
     background-color: #111;      /* Тёмный фон */
     color: #fff;                 /* Белый текст */
@@ -1450,7 +1450,7 @@ body {
     padding: 0;
 }
 
-.container {
+.Policycontainer {
     max-width: 800px;
     margin: 50px auto;
     background: #111;            /* Тёмный фон */
@@ -1459,7 +1459,7 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Белое свечение */
 }
 
-h1 {
+h3 {
     font-size: 2em;
     margin-bottom: 20px;
     border-bottom: 2px solid #fff; /* Белая линия */
@@ -1468,18 +1468,18 @@ h1 {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
-p, li {
+p3, li2 {
     line-height: 1.6;
     font-size: 1.1em;
     color: #ddd; /* Светло-серый для читаемости */
 }
 
-ul {
+ul3 {
     padding-left: 20px;
     margin-top: 10px;
 }
 
-a.back {
+a.back3 {
     display: inline-block;
     margin-top: 30px;
     color: #fff;
@@ -1489,7 +1489,7 @@ a.back {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 }
 
-a.back:hover {
+a.back3:hover {
     color: #bbb;
     text-decoration: underline;
 }
