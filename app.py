@@ -129,6 +129,10 @@ def submit_mood():
 
     return '', 200
 
+@app.route('/privacy')
+def privacy_policy():
+    return render_template('privacy.html')
+
 @app.route('/get_mood_level')
 def get_mood_level():
     user_id = request.args.get("user_id", "default_user")
