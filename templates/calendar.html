@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Календарь настроения</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -46,6 +47,10 @@
               <h4 style="margin: 0 0 6px 0;">Все комментарии за всё время:</h4>
               <ul id="allTimeCommentsList" style="list-style: disc; padding-left: 20px; margin: 0; color: var(--text);"></ul>
             </div>
+              <div style="position: relative; height: 250px; margin-top: 20px;">
+                  <canvas id="moodChart"></canvas>
+                </div>
+
           </div>
         </div>
 
@@ -164,6 +169,7 @@
         document.getElementById('allTimeNeutral').textContent = stats.neutral || 0;
         document.getElementById('allTimeSad').textContent = stats.sad || 0;
         document.getElementById('allTimeTotal').textContent = stats.total || 0;
+        renderMoodChart(data.all_time_stats || {});
     }
 
     function fetchCalendar(year, month) {
@@ -178,6 +184,39 @@
             })
             .catch(() => alert('Ошибка при загрузке данных календаря'));
     }
+    function renderMoodChart(stats) {
+        const ctx = document.getElementById('moodChart').getContext('2d');
+        if (window.moodChartInstance) {
+            window.moodChartInstance.destroy();
+        }
+
+        window.moodChartInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['😊 Счастливые', '😐 Нейтральные', '😢 Грустные'],
+                datasets: [{
+                    data: [stats.happy || 0, stats.neutral || 0, stats.sad || 0],
+                    backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.label}: ${ctx.raw}`
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
 
     function changeMonth(delta) {
         let newMonth = currentMonth + delta;
