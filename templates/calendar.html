@@ -28,6 +28,7 @@
             <button class="tabBtn active" data-tab="counts">Количество дней</button>
             <button class="tabBtn" data-tab="comments">Комментарии</button>
             <button class="tabBtn" data-tab="allTimeStats">Статистика за всё время</button>
+            <button id="adminPanelBtn" style="display:none;">Админ-панель</button>
           </div>
 
           <div class="tabContent active" id="counts">
@@ -184,6 +185,7 @@
             })
             .catch(() => alert('Ошибка при загрузке данных календаря'));
     }
+
     function renderMoodChart(stats) {
         const ctx = document.getElementById('moodChart').getContext('2d');
         if (window.moodChartInstance) {
@@ -216,7 +218,6 @@
             }
         });
     }
-
 
     function changeMonth(delta) {
         let newMonth = currentMonth + delta;
@@ -348,10 +349,21 @@
         const savedTheme = localStorage.getItem('theme') || 'dark';
         applyTheme(savedTheme);
 
+        if (userId === '870004624') {
+            const adminBtn = document.getElementById('adminPanelBtn');
+            if (adminBtn) {
+                adminBtn.style.display = 'inline-block';
+                adminBtn.onclick = () => {
+                    window.location.href = `/admin?user_id=${userId}`;
+                };
+            }
+        }
+
         const now = new Date();
         fetchCalendar(now.getFullYear(), now.getMonth() + 1);
     });
 </script>
+
 <script>
 const moodMessages = {
     happy: [

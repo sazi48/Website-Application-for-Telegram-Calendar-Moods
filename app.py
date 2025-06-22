@@ -8,6 +8,7 @@ from telegram.ext import Updater, CommandHandler
 import os
 
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
+ADMIN_USER_ID = "870004624"  # строкой, чтобы совпадало с JS userId
 
 def start(update, context):
     keyboard = [
@@ -197,6 +198,24 @@ def get_calendar_data():
         "all_time_stats": all_time_stats,
         "all_time_comments": all_time_comments
     })
+
+@app.route('/admin')
+def admin_panel():
+    # В идеале получать user_id из сессии или заголовка, у тебя же сейчас user_id передается в запросах.
+    # Можно реализовать простой способ — получить user_id из query параметра или из запроса,
+    # но безопаснее — передавать через заголовки, токены или авторизацию.
+    # Для примера — возьмем user_id из query:
+    user_id = request.args.get('user_id')
+    if user_id != ADMIN_USER_ID:
+        return "Доступ запрещён", 403
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, user_id, date, mood, comment FROM moods ORDER BY date DESC")
+    records = cursor.fetchall()
+    conn.close()
+
+    return render_template('admin.html', records=records)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

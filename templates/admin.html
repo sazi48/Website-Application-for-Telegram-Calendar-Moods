@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <title>Админ-панель - Все настроения</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: var(--text);
+      }
+      th, td {
+        border: 1px solid var(--bar-bg);
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: var(--bar-bg);
+      }
+      tr:nth-child(even) {
+        background-color: #222;
+      }
+    </style>
+</head>
+<body>
+    <h1>Админ-панель — все записи настроений</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Дата</th>
+                <th>Настроение</th>
+                <th>Комментарий</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, user_id, date, mood, comment in records %}
+            <tr>
+                <td>{{ id }}</td>
+                <td>{{ user_id }}</td>
+                <td>{{ date }}</td>
+                <td>{{ mood }}</td>
+                <td>{{ comment or '' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="/">← Вернуться к календарю</a></p>
+</body>
+</html>
