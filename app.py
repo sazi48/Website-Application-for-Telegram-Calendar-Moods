@@ -211,7 +211,7 @@ def admin_panel():
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, user_id, date, mood, comment FROM moods ORDER BY date DESC")
+    cursor.execute("SELECT id, user_id, username, date, mood, comment FROM moods ORDER BY date DESC")
     records = cursor.fetchall()
     conn.close()
 

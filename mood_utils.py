@@ -2,14 +2,19 @@ import sqlite3
 
 DB_PATH = "database.db"
 
-def add_mood(user_id, date, mood, comment=""):
+def add_mood(user_id, username, date, mood, comment=""):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute(
         """
-        INSERT OR REPLACE INTO moods (user_id, date, mood, comment) VALUES (?, ?, ?, ?)
+        INSERT INTO moods (user_id, username, date, mood, comment)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(user_id, date) DO UPDATE SET
+            username=excluded.username,
+            mood=excluded.mood,
+            comment=excluded.comment
         """,
-        (user_id, date, mood, comment)
+        (user_id, username, date, mood, comment)
     )
     conn.commit()
     conn.close()

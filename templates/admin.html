@@ -4,24 +4,6 @@
     <meta charset="UTF-8" />
     <title>Админ-панель - Все настроения</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        color: var(--text);
-      }
-      th, td {
-        border: 1px solid var(--bar-bg);
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: var(--bar-bg);
-      }
-      tr:nth-child(even) {
-        background-color: #222;
-      }
-    </style>
 </head>
 <body>
     <h1>Админ-панель — все записи настроений</h1>
@@ -30,6 +12,7 @@
             <tr>
                 <th>ID</th>
                 <th>User ID</th>
+                <th>Username</th>
                 <th>Дата</th>
                 <th>Настроение</th>
                 <th>Комментарий</th>
@@ -40,6 +23,7 @@
             <tr>
                 <td>{{ id }}</td>
                 <td>{{ user_id }}</td>
+                <td>{{ username or '' }}</td>
                 <td>{{ date }}</td>
                 <td>{{ mood }}</td>
                 <td>{{ comment or '' }}</td>

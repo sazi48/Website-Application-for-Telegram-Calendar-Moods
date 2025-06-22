@@ -77,12 +77,11 @@
     }
 
     let currentYear, currentMonth;
-    let userId = "default_user";
 
-    // Попытка получить user_id из Telegram WebApp API
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe?.user?.id) {
-        userId = Telegram.WebApp.initDataUnsafe.user.id.toString();
-    }
+    // Получаем user из Telegram WebApp API
+    const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    const userId = user?.id?.toString() || "default_user";
+    const username = user?.username ? "@" + user.username : "";
 
     function renderCalendar(data) {
         const container = document.getElementById('calendarContainer');
@@ -252,7 +251,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ date, mood, comment, user_id: userId })
+            body: new URLSearchParams({ date, mood, comment, user_id: userId, username })
         })
         .then(res => {
             if (res.ok) {
@@ -278,7 +277,7 @@
         fetch('/submit_mood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ date: dateStr, mood, comment, user_id: userId })
+            body: new URLSearchParams({ date: dateStr, mood, comment, user_id: userId, username })
         })
         .then(res => {
             if (res.ok) {
@@ -296,7 +295,7 @@
         fetch('/clear_all_moods', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ user_id: userId })
+            body: new URLSearchParams({ user_id: userId, username })
         })
         .then(res => res.json())
         .then(data => {

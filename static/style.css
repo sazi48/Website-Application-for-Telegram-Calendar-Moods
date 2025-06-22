@@ -1393,3 +1393,50 @@ input:checked + .slider:before {
   font-weight: bold;
   cursor: pointer;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text);
+}
+th, td {
+    border: 1px solid var(--bar-bg);
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: var(--bar-bg);
+}
+    tr:nth-child(even) {
+    background-color: #222;
+}
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: var(--bg);
+    color: var(--text);
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid var(--bar-bg);
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: var(--bar-bg);
+}
+tr:nth-child(even) {
+    background-color: #222;
+}
+a {
+    color: #2ecc71;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
