@@ -1,6 +1,4 @@
 import sqlite3
-
-import app
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 import calendar
@@ -10,8 +8,34 @@ from telegram.ext import Updater, CommandHandler
 import os
 
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
-ADMIN_ID = "870004624"  # строка, так как user_id - строка в JS
 
+app = Flask(__name__)
+DB_PATH = "database.db"
+ADMIN_ID = "870004624"  # твой Telegram user_id
+
+@app.route('/admin')
+def admin_panel():
+    user_id = request.args.get('user_id')
+    if user_id != ADMIN_ID:
+        return "Доступ запрещён", 403
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT user_id, date, mood, comment
+        FROM moods
+        ORDER BY user_id, date
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+
+    data = {}
+    for u_id, date, mood, comment in rows:
+        if u_id not in data:
+            data[u_id] = []
+        data[u_id].append({"date": date, "mood": mood, "comment": comment or ""})
+
+    return render_template("admin.html", data=data)
 def start(update, context):
     keyboard = [
         [InlineKeyboardButton(
@@ -200,30 +224,6 @@ def get_calendar_data():
         "all_time_stats": all_time_stats,
         "all_time_comments": all_time_comments
     })
-
-@app.route('/admin')
-def admin_panel():
-    user_id = request.args.get('user_id', 'default_user')
-    if user_id != ADMIN_ID:
-        return "Доступ запрещён", 403
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    # Получаем все записи, сгруппированные по user_id, дате (берём последние записи на дату)
-    cursor.execute("""
-        SELECT user_id, date, mood, comment
-        FROM moods
-        WHERE user_id IS NOT NULL
-        ORDER BY user_id, date
-    """)
-    rows = cursor.fetchall()
-    conn.close()
-    # Формируем словарь {user_id: [{date,mood,comment}, ...]}
-    data = {}
-    for user, date, mood, comment in rows:
-        if user not in data:
-            data[user] = []
-        data[user].append({"date": date, "mood": mood, "comment": comment})
-    return render_template("admin.html", data=data)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

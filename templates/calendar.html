@@ -48,11 +48,11 @@
               <h4 style="margin: 0 0 6px 0;">Комментарии за всё время:</h4>
               <ul id="allTimeCommentsList" style="list-style: disc; padding-left: 20px; margin: 0; color: var(--text);"></ul>
             </div>
-              <div style="position: relative; height: 250px; margin-top: 20px;">
-                  <canvas id="moodChart"></canvas>
+            <div style="position: relative; height: 250px; margin-top: 20px;">
+              <canvas id="moodChart"></canvas>
             </div>
-            <div class="tabContent" id="adminPanel" style="max-height: 400px; overflow-y: auto; display:none;">
-              <iframe id="adminIframe" style="width: 100%; height: 500px; border: none;"></iframe>
+            <div class="tabContent" id="adminPanel" style="display:none;">
+              <iframe id="adminIframe" style="width:100%; height:600px; border:none;"></iframe>
             </div>
           </div>
         </div>
@@ -80,29 +80,6 @@
 
     let currentYear, currentMonth;
     let userId = "default_user";
-    document.addEventListener('DOMContentLoaded', () => {
-      // Текущие настройки темы и вызов fetchCalendar уже есть в твоём коде, не забудь вызвать их тоже
-
-      // Проверка, если пользователь — админ
-      if(userId === "870004624") {
-        const adminBtn = document.getElementById('adminPanelBtn');
-        adminBtn.style.display = 'inline-block';
-
-        adminBtn.addEventListener('click', () => {
-          // Снимаем active с других кнопок и контента
-          document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('active'));
-          document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
-          // Активируем админ-кнопку и контент
-          adminBtn.classList.add('active');
-          const adminContent = document.getElementById('adminPanel');
-          adminContent.style.display = 'block';
-          adminContent.classList.add('active');
-
-          // Загрузить страницу админки с user_id
-          document.getElementById('adminIframe').src = `/admin?user_id=${userId}`;
-        });
-      }
-    });
 
     // Попытка получить user_id из Telegram WebApp API
     if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe?.user?.id) {
@@ -461,6 +438,27 @@ window.addEventListener("click", function (event) {
     modal.style.display = "none";
   }
 });
+document.addEventListener('DOMContentLoaded', () => {
+  // ... твой существующий код инициализации
+
+  if (userId === "870004624") {
+    const adminBtn = document.getElementById('adminPanelBtn');
+    adminBtn.style.display = 'inline-block';
+    adminBtn.addEventListener('click', () => {
+      // переключаем табы
+      document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
+
+      adminBtn.classList.add('active');
+      const adminPanel = document.getElementById('adminPanel');
+      adminPanel.style.display = 'block';
+      adminPanel.classList.add('active');
+
+      document.getElementById('adminIframe').src = `/admin?user_id=${userId}`;
+    });
+  }
+});
+
 </script>
 
 </body>
