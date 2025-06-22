@@ -1434,6 +1434,7 @@ tr:nth-child(even) {
     background-color: #222;
 }
 a {
+    font-size: 24px;
     color: #2ecc71;
     text-decoration: none;
 }
