@@ -41,55 +41,45 @@ def calculate_mood_level(moods):
     return round(level)
 
 def get_all_time_stats(user_id):
-    """
-    Правильный подсчет настроений за все время:
-    Учитываем по каждой дате только последнее состояние.
-    """
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Получаем последние записи настроения для каждого дня
+    # Получаем последние записи настроения (по id) для каждой даты, исключая deleted
     cursor.execute("""
-        SELECT date, mood FROM moods
-        WHERE user_id = ? AND mood IN ('happy', 'neutral', 'sad')
-        GROUP BY date
-        HAVING MAX(id)
-    """, (user_id,))
-    rows = cursor.fetchall()
-
-    # Альтернативный запрос, если выше не сработает (sqlite не поддерживает HAVING MAX(id) так просто):
-    # Можно выбрать последние записи через подзапрос, например:
-
-    cursor.execute("""
-        SELECT m.date, m.mood FROM moods m
+        SELECT m.mood FROM moods m
         INNER JOIN (
             SELECT date, MAX(id) as max_id FROM moods
-            WHERE user_id = ? AND mood IN ('happy', 'neutral', 'sad')
+            WHERE user_id = ? AND status IN ('active', 'edited')
             GROUP BY date
         ) sub ON m.id = sub.max_id
-    """, (user_id,))
-    rows = cursor.fetchall()
+        WHERE m.user_id = ?
+    """, (user_id, user_id))
 
+    rows = cursor.fetchall()
     conn.close()
 
     stats = {"happy": 0, "neutral": 0, "sad": 0, "total": 0}
-    for mood_date, mood_val in rows:
-        stats[mood_val] = stats.get(mood_val, 0) + 1
-        stats["total"] += 1
+    for (mood,) in rows:
+        if mood in stats:
+            stats[mood] += 1
+            stats["total"] += 1
+
     return stats
+
 
 def get_all_time_comments(user_id):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("""
         SELECT date, comment FROM moods
-        WHERE user_id = ? AND comment IS NOT NULL AND TRIM(comment) != ''
+        WHERE user_id = ? AND comment IS NOT NULL AND TRIM(comment) != '' AND status IN ('active', 'edited')
         ORDER BY date ASC
     """, (user_id,))
     rows = cursor.fetchall()
     conn.close()
 
     return [{"date": row[0], "comment": row[1]} for row in rows]
+
 
 @app.route('/')
 def index():
