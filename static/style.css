@@ -1441,3 +1441,55 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;      /* Тёмный фон */
+    color: #fff;                 /* Белый текст */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #111;            /* Тёмный фон */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Белое свечение */
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #fff; /* Белая линия */
+    padding-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+p, li {
+    line-height: 1.6;
+    font-size: 1.1em;
+    color: #ddd; /* Светло-серый для читаемости */
+}
+
+ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+a.back {
+    display: inline-block;
+    margin-top: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+a.back:hover {
+    color: #bbb;
+    text-decoration: underline;
+}
