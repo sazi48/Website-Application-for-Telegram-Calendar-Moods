@@ -367,7 +367,36 @@ function showMoodMessage(mood) {
 
 <footer class="footer">
   © 2025 by <a href="https://t.me/kirillkkaaaaaa" target="_blank">@kirillkkaaaaaa</a>
+    <br>
+  <button id="donateBtn" style="margin-top: 8px;">💖 Поддержать автора</button>
 </footer>
+<!-- Модальное окно -->
+<div id="donationModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Поддержать автора</h2>
+    <ul>
+      <li>💖 <a href="https://www.donationalerts.com/r/kirillkkaaaaaa" target="_blank">DonationAlerts</a></li>
+      <li>💳 Перевод на карту Сбер: <b>4276 3802 0793 3495</b></li>
+        💳 Перевод на карту ВТБ: <b>2200 2414 1308 1591</b>
+    </ul>
+    <p style="margin-top: 10px;">Спасибо за поддержку! ❤️</p>
+  </div>
+</div>
+<script>
+document.getElementById("donateBtn").addEventListener("click", function () {
+  document.getElementById("donationModal").style.display = "block";
+});
+document.getElementById("closeModal").addEventListener("click", function () {
+  document.getElementById("donationModal").style.display = "none";
+});
+window.addEventListener("click", function (event) {
+  const modal = document.getElementById("donationModal");
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+});
+</script>
 
 </body>
 </html>
