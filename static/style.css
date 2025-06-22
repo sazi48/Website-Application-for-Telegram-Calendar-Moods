@@ -1442,54 +1442,73 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Фон страницы — очень тёмный */
 body3 {
-    font-family: Arial, sans-serif;
-    background-color: #111;      /* Тёмный фон */
-    color: #fff;                 /* Белый текст */
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-}
-
-.Policycontainer {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #111;            /* Тёмный фон */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Белое свечение */
 }
 
-h3 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #fff; /* Белая линия */
+/* Контейнер политики */
+.policy-container {
+    background-color: #1e1e1e;
+    padding: 40px 50px;
+    border-radius: 15px;
+    max-width: 700px;
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.15),
+        0 0 30px rgba(255, 255, 255, 0.1),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Заголовок */
+.policy-container h3 {
+    font-size: 2.4rem;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #fff;
+    /* Мягкое, приглушённое свечение */
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.3),
+        0 0 8px rgba(255, 255, 255, 0.15);
+    border-bottom: 2px solid #fff;
     padding-bottom: 10px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
-p3, li2 {
+/* Абзацы */
+.policy-container p {
+    font-size: 1.15rem;
     line-height: 1.6;
-    font-size: 1.1em;
-    color: #ddd; /* Светло-серый для читаемости */
+    margin-bottom: 20px;
+    color: #ccc;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
-ul3 {
-    padding-left: 20px;
-    margin-top: 10px;
+/* Список */
+.policy-container ul {
+    list-style-type: disc;
+    margin-left: 25px;
+    margin-bottom: 25px;
+    color: #ddd;
 }
 
-a.back3 {
-    display: inline-block;
-    margin-top: 30px;
+/* Элементы списка */
+.policy-container ul li {
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+/* Выделение ключевых слов */
+.policy-container strong {
     color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s ease;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-}
-
-a.back3:hover {
-    color: #bbb;
-    text-decoration: underline;
+    text-shadow: 0 0 6px #fff;
 }
