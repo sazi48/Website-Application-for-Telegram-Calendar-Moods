@@ -8,6 +8,9 @@ from telegram.ext import Updater, CommandHandler
 import os
 
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
+ADMIN_USER_IDS = {870004624}  # замените на свой Telegram user_id (число)
+
+
 
 def start(update, context):
     keyboard = [
@@ -198,6 +201,72 @@ def get_calendar_data():
         "all_time_comments": all_time_comments
     })
 
+@app.route('/admin/users')
+def admin_users():
+    user_id = request.args.get("user_id", "default_user")
+    try:
+        # Проверка прав админа
+        if int(user_id) not in ADMIN_USER_IDS:
+            return jsonify({"error": "Access denied"}), 403
+    except Exception:
+        return jsonify({"error": "Invalid user_id"}), 400
+
+    # Параметры пагинации и фильтрации
+    page = int(request.args.get("page", 1))
+    per_page = int(request.args.get("per_page", 50))
+    search_user = request.args.get("search_user", "").strip()
+    search_date = request.args.get("search_date", "").strip()
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    query = "SELECT id, user_id, date, mood, comment FROM moods WHERE 1=1"
+    params = []
+
+    if search_user:
+        query += " AND user_id LIKE ?"
+        params.append(f"%{search_user}%")
+    if search_date:
+        query += " AND date = ?"
+        params.append(search_date)
+
+    query += " ORDER BY date DESC, id DESC LIMIT ? OFFSET ?"
+    params.extend([per_page, per_page * (page -1)])
+
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+
+    # Получаем общее количество для пагинации
+    count_query = "SELECT COUNT(*) FROM moods WHERE 1=1"
+    count_params = []
+    if search_user:
+        count_query += " AND user_id LIKE ?"
+        count_params.append(f"%{search_user}%")
+    if search_date:
+        count_query += " AND date = ?"
+        count_params.append(search_date)
+
+    cursor.execute(count_query, count_params)
+    total_count = cursor.fetchone()[0]
+
+    conn.close()
+
+    data = []
+    for r in rows:
+        data.append({
+            "id": r[0],
+            "user_id": r[1],
+            "date": r[2],
+            "mood": r[3],
+            "comment": r[4] or ""
+        })
+
+    return jsonify({
+        "total_count": total_count,
+        "page": page,
+        "per_page": per_page,
+        "data": data
+    })
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)

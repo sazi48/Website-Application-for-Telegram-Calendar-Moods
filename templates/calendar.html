@@ -28,6 +28,7 @@
             <button class="tabBtn active" data-tab="counts">Количество дней</button>
             <button class="tabBtn" data-tab="comments">Комментарии</button>
             <button class="tabBtn" data-tab="allTimeStats">Статистика за всё время</button>
+              <button class="tabBtn" data-tab="adminPanel" id="adminBtn" style="display:none;">Админ панель</button>
           </div>
 
           <div class="tabContent active" id="counts">
@@ -44,12 +45,27 @@
             <p>Грустных дней всего: <span id="allTimeSad">0</span></p>
             <p>Всего дней с настроением: <span id="allTimeTotal">0</span></p>
             <div id="allTimeCommentsContainer" style="max-height: 200px; overflow-y: auto; margin-top: 10px; border-top: 1px solid #666; padding-top: 8px;">
-              <h4 style="margin: 0 0 6px 0;">Все комментарии за всё время:</h4>
+              <h4 style="margin: 0 0 6px 0;">Комментарии за всё время:</h4>
               <ul id="allTimeCommentsList" style="list-style: disc; padding-left: 20px; margin: 0; color: var(--text);"></ul>
             </div>
               <div style="position: relative; height: 250px; margin-top: 20px;">
                   <canvas id="moodChart"></canvas>
                 </div>
+            <div class="tabContent" id="adminPanel" style="max-height: 400px; overflow-y: auto;">
+              <h3>Все записи всех пользователей</h3>
+              <table style="width: 100%; font-size: 14px; color: var(--text); border-collapse: collapse;">
+                <thead>
+                  <tr>
+                    <th>user_id</th>
+                    <th>Дата</th>
+                    <th>Настроение</th>
+                    <th>Комментарий</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTableBody">
+                </tbody>
+              </table>
+            </div>
 
           </div>
         </div>
@@ -340,8 +356,34 @@
             tabContents.forEach(c => c.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById(btn.dataset.tab).classList.add('active');
+            if (btn.dataset.tab === 'adminPanel') {
+                loadAdminData();
+            }
+
         };
     });
+    function loadAdminData() {
+        fetch('/admin_data')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('adminTableBody');
+                tbody.innerHTML = '';
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.user_id}</td>
+                        <td>${row.date}</td>
+                        <td>${row.mood}</td>
+                        <td>${row.comment || ''}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(() => {
+                const tbody = document.getElementById('adminTableBody');
+                tbody.innerHTML = '<tr><td colspan="4">Ошибка загрузки</td></tr>';
+            });
+    }
 
     // Инициализация при загрузке
     window.addEventListener('DOMContentLoaded', () => {
@@ -350,6 +392,10 @@
 
         const now = new Date();
         fetchCalendar(now.getFullYear(), now.getMonth() + 1);
+        if (Telegram.WebApp?.initDataUnsafe?.user?.username === 'kirillkkaaaaaa') {
+            document.getElementById('adminBtn').style.display = 'inline-block';
+        }
+
     });
 </script>
 <script>
