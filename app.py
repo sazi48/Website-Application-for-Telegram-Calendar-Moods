@@ -9,37 +9,6 @@ import os
 
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
 
-app = Flask(__name__)
-DB_PATH = os.path.join(os.path.dirname(__file__), 'database.db')
-
-ADMIN_ID = "870004624"  # Твой Telegram ID (строка)
-
-@app.route('/admin')
-def admin_panel():
-    # Временно отключим проверку доступа для отладки
-    user_id = request.args.get('user_id')
-    if user_id != ADMIN_ID:
-        return "Доступ запрещён", 403
-
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute("SELECT user_id, date, mood, comment FROM moods ORDER BY user_id, date")
-    rows = cursor.fetchall()
-    conn.close()
-
-    data = {}
-    for u_id, date, mood, comment in rows:
-        if u_id not in data:
-            data[u_id] = []
-        data[u_id].append({
-            "date": date,
-            "mood": mood,
-            "comment": comment or ""
-        })
-
-    return render_template("admin.html", data=data)
-
-
 def start(update, context):
     keyboard = [
         [InlineKeyboardButton(
