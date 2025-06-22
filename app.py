@@ -10,8 +10,6 @@ import os
 TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
 ADMIN_USER_IDS = {870004624}  # замените на свой Telegram user_id (число)
 
-
-
 def start(update, context):
     keyboard = [
         [InlineKeyboardButton(
@@ -267,6 +265,7 @@ def admin_users():
         "per_page": per_page,
         "data": data
     })
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
