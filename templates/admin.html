@@ -5,21 +5,76 @@
     <title>Админ-панель - Все настроения</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg, #111);
+            color: var(--text, #fff);
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1a1a1a;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: left;
+        }
+
+        th {
+            background-color: #222;
+        }
+
         .deleted {
             color: red;
         }
+
         .edited {
-            color: #ffff00;
+            background-color: #454545;
         }
+
         .active {
-            color: #2ecc71; /* зеленый цвет текста */
-            /* Или можно фон: background-color: #144d14; */
+            color: #2ecc71;
+        }
+
+        tr:hover {
+            background-color: #333;
+        }
+
+        a {
+            color: #4dc147;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <h1>Админ-панель — все записи настроений</h1>
-    <table>
+
+    <input type="text" id="searchInput" placeholder="Поиск по таблице..." onkeyup="filterTable()">
+
+    <table id="moodTable">
         <thead>
             <tr>
                 <th>ID</th>
@@ -53,6 +108,19 @@
             {% endfor %}
         </tbody>
     </table>
+
     <p><a href="/">← Вернуться к календарю</a></p>
+
+    <script>
+        function filterTable() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#moodTable tbody tr");
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        }
+    </script>
 </body>
 </html>
