@@ -214,6 +214,9 @@ def admin_panel():
 
     return render_template('admin.html', records=records)
 
+@app.route('/privacy')
+def privacy():
+    return render_template("privacy.html")
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

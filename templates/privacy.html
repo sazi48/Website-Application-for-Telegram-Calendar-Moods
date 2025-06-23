@@ -20,7 +20,8 @@
             background-color: #1a1a1a;
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); /* белое свечение рамки */
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         h1 {
@@ -30,21 +31,23 @@
             padding-bottom: 10px;
             color: #fff;
             text-align: center;
+            text-shadow: 0 0 8px white; /* белое свечение заголовка */
         }
 
         p {
             font-size: 1.05em;
             line-height: 1.6;
             margin-bottom: 15px;
+            text-shadow: 0 0 4px rgba(255,255,255,0.2); /* легкое свечение текста */
         }
 
         ul {
-            margin: 0;
             padding-left: 20px;
         }
 
         li {
             margin-bottom: 10px;
+            text-shadow: 0 0 4px rgba(255,255,255,0.2);
         }
 
         a.back {
@@ -52,6 +55,8 @@
             margin-top: 25px;
             color: #ccc;
             text-decoration: none;
+            transition: color 0.3s ease;
+            text-shadow: 0 0 6px white;
         }
 
         a.back:hover {
