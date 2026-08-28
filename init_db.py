@@ -18,4 +18,4 @@ CREATE TABLE IF NOT EXISTS moods (
 conn.commit()
 conn.close()
 
-print("✅ Таблица 'moods' создана.")
+print("✅ Table 'moods' created.")
