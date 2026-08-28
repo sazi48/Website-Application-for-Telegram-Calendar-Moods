@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8" />
-    <title>Админ-панель - Все настроения</title>
+    <title>Admin panel - All moods</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <style>
         body {
@@ -44,15 +44,15 @@
         }
 
         .deleted {
-            color: #e74c3c; /* красный */
+            color: #e74c3c; 
         }
 
         .edited {
-            color: #f1c40f; /* жёлтый */
+            color: #f1c40f;
         }
 
         .active {
-            color: #2ecc71; /* зелёный */
+            color: #2ecc71; 
         }
 
         tr:hover {
@@ -70,9 +70,9 @@
     </style>
 </head>
 <body>
-    <h1>Админ-панель — все записи настроений</h1>
+    <h1>Admin panel - all mood records</h1>
 
-    <input type="text" id="searchInput" placeholder="Поиск по таблице..." onkeyup="filterTable()">
+    <input type="text" id="searchInput" placeholder="Search table..." onkeyup="filterTable()">
 
     <table id="moodTable">
         <thead>
@@ -97,11 +97,11 @@
                 <td>{{ comment or '' }}</td>
                 <td>
                     {% if status == 'deleted' %}
-                        Удалено
+                        Deleted
                     {% elif status == 'edited' %}
-                        Изменено
+                        Changed
                     {% else %}
-                        Активно
+                        Actively
                     {% endif %}
                 </td>
             </tr>
@@ -109,7 +109,7 @@
         </tbody>
     </table>
 
-    <p><a href="/">← Вернуться к календарю</a></p>
+    <p><a href="/">← Return to calendar</a></p>
 
     <script>
         function filterTable() {
