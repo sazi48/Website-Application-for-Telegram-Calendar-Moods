@@ -239,7 +239,7 @@ button {
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    min-width: 0; /* чтобы flex корректно сжимался */
+    min-width: 0; 
 }
 
 .comment-buttons button {
@@ -259,7 +259,7 @@ button {
     display: none;
 }
 
-/* Чтобы клик по форме не закрывал её (прекращаем всплытие) */
+
 .mood-form {
     margin-top: 8px;
     display: flex;
@@ -267,7 +267,7 @@ button {
     gap: 6px;
 }
 
-/* Остальное по желанию - кнопки, поле ввода как обсуждали ранее */
+
 body {
     display: flex;
     flex-direction: column;
@@ -286,11 +286,11 @@ h1 {
 .calendar {
     margin-top: 20px;
     width: 100%;
-    max-width: 700px; /* Чтобы не растягивалось на всю ширину */
+    max-width: 700px; 
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
-    justify-content: center; /* Центрируем грид */
+    justify-content: center; 
 }
 .mood-bar {
     margin: 20px auto;
@@ -310,7 +310,7 @@ h1 {
     font-weight: bold;
     font-size: 18px;
 }
-/* Стили переключателя-ползунка */
+
 
 .switch {
   position: relative;
@@ -347,7 +347,6 @@ h1 {
   transition: 0.4s;
 }
 
-/* Состояние checked - ползунок вправо и цвет активный */
 
 input:checked + .slider {
   background-color: var(--bar-fill);
@@ -357,7 +356,7 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-/* Опционально - сделать скруглённый ползунок */
+
 
 .slider.round {
   border-radius: 34px;
@@ -380,10 +379,10 @@ input:checked + .slider:before {
 
 .theme-toggle .moon,
 .theme-toggle .sun {
-  pointer-events: none; /* чтобы клики не мешали переключателю */
+  pointer-events: none; 
 }
 
-/* Остальные стили переключателя оставь как раньше */
+
 .switch {
   position: relative;
   display: inline-block;
@@ -447,9 +446,9 @@ input:checked + .slider:before {
 }
 
 .month-navigation button:hover {
-    background-color: #1e8449; /* чуть темнее */
+    background-color: #1e8449; 
 }
-/* Основной контейнер календаря */
+
 .calendar {
   display: flex;
   flex-wrap: wrap;
@@ -460,12 +459,12 @@ input:checked + .slider:before {
   padding: auto;
 }
 
-/* Карточка дня */
+
 .day {
   background: var(--day-bg, #222);
   border-radius: 8px;
   padding: 8px;
-  width: 14px; /* ~7 дней в строке (100/7=14.28%) */
+  width: 14px; 
   min-width: 40px;
   box-sizing: border-box;
   cursor: pointer;
@@ -474,12 +473,12 @@ input:checked + .slider:before {
   transition: background-color 0.3s;
 }
 
-/* Состояния настроения */
+
 .day.happy { background-color: #4caf50; }
 .day.neutral { background-color: #ffeb3b; }
 .day.sad { background-color: #f44336; }
 
-/* Число дня */
+
 .day-number {
   font-weight: bold;
   font-size: 1.1rem;
@@ -487,19 +486,19 @@ input:checked + .slider:before {
   margin-bottom: 4px;
 }
 
-/* Эмодзи */
+
 .emoji {
   font-size: 1.5rem;
   display: block;
   margin-bottom: 6px;
 }
 
-/* Форма комментария */
+
 .mood-form {
   margin-top: 6px;
 }
 
-/* Комментарий - input */
+
 .comment-input {
   width: 100%;
   padding: 4px 6px;
@@ -509,7 +508,7 @@ input:checked + .slider:before {
   box-sizing: border-box;
 }
 
-/* Кнопки под комментариями */
+
 .comment-buttons, .emoji-buttons {
   margin-top: 6px;
   display: flex;
@@ -518,7 +517,7 @@ input:checked + .slider:before {
   flex-wrap: wrap;
 }
 
-/* Кнопки с эмодзи */
+
 .emoji-buttons button {
   font-size: 1.3rem;
   padding: 2px 6px;
@@ -534,7 +533,7 @@ input:checked + .slider:before {
   background: #777;
 }
 
-/* Кнопка сохранить */
+
 .comment-buttons button {
   padding: 4px 12px;
   border-radius: 6px;
@@ -558,7 +557,7 @@ input:checked + .slider:before {
   padding: 6px 12px;
   border-radius: 6px;
   border: none;
-  background-color: #28a745; /* приятный зеленый, не слишком яркий */
+  background-color: #28a745; 
   color: white;
   cursor: pointer;
   font-weight: 600;
@@ -570,7 +569,7 @@ input:checked + .slider:before {
   background-color: #44944A;
 }
 
-/* Минимальные стили для кнопок и календаря */
+
 .month-navigation button {
     padding: 8px 16px;
     font-size: 1rem;
@@ -687,7 +686,7 @@ input:checked + .slider:before {
 
 .day .mood-form {
     position: absolute;
-    top: 100%; /* Появляется под ячейкой */
+    top: 100%; 
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -711,7 +710,7 @@ input:checked + .slider:before {
     transition: background-color 0.3s;
 }
 
-/* Цвета по настроению */
+
 .mood-form .emoji-buttons button.happy {
     background-color: var(--happy);
 }
@@ -725,7 +724,7 @@ input:checked + .slider:before {
     background-color: var(--sad);
 }
 
-/* Эффект при наведении */
+
 .mood-form .emoji-buttons button:hover {
     opacity: 0.9;
 }
@@ -741,7 +740,7 @@ input:checked + .slider:before {
     transition: background-color 0.3s;
 }
 
-/* Цвета по настроению */
+
 .mood-form .emoji-buttons button.happy {
     background-color: var(--happy);
 }
@@ -755,19 +754,19 @@ input:checked + .slider:before {
     background-color: var(--sad);
 }
 
-/* Эффект при наведении */
+
 .mood-form .emoji-buttons button:hover {
     opacity: 0.9;
 }
 
 [data-theme="light"] {
-    --bg: #c7c7c7;              /* темно-серый фон — комфортнее для глаз */
+    --bg: #c7c7c7;             
     --text: #000;
     --bar-bg: #b0b0b0;
     --bar-fill: #27ae60;
 
-    --day-bg: #dcdcdc;          /* светло-серый для ячеек */
-    --day-border: #777;         /* чуть темнее рамка */
+    --day-bg: #dcdcdc;        
+    --day-border: #777;     
     --happy: #81c784;
     --neutral: #fff176;
     --sad: #e57373;
@@ -796,7 +795,7 @@ input:checked + .slider:before {
 [data-theme="light"] .mood-percentage {
     color: #000;
 }
-/* Стили для меню гамбургер */
+
 #menuToggle {
     cursor: pointer;
     font-size: 24px;
@@ -850,18 +849,18 @@ input:checked + .slider:before {
     list-style: disc;
     padding-left: 20px;
 }
-/* Немного отступов в списках */
+
 #allTimeStatsList p {
     margin: 6px 0;
 }
-/* Увеличиваем размер ячеек календаря */
+
 .day {
-    width: 80px !important;      /* или min-width: 80px; */
+    width: 80px !important;     
     height: 50px !important;
     padding: 12px !important;
 }
 
-/* Число дня и эмодзи чуть больше */
+
 .day .day-number {
     font-size: 1.4rem !important;
 }
@@ -871,7 +870,7 @@ input:checked + .slider:before {
     margin-top: 6px !important;
 }
 
-/* Кнопки формы настроения больше */
+
 .mood-form .emoji-buttons button {
     font-size: 28px !important;
     padding: 14px !important;
@@ -887,18 +886,18 @@ input:checked + .slider:before {
     font-size: 16px !important;
     padding: 8px !important;
 }
-/* Уменьшаем высоту и ширину полосы, делаем адаптивной */
+
 .mood-bar {
-    max-width: 600px;   /* максимум ширины */
-    width: 90vw;        /* адаптивно - 90% ширины экрана */
-    height: 14px;       /* чуть ниже */
+    max-width: 600px;   
+    width: 90vw;        
+    height: 14px;   
     border-radius: 8px;
     margin: 15px auto;
     background-color: var(--bar-bg);
     overflow: hidden;
 }
 
-/* Заливка полосы — по высоте 100% */
+
 .mood-fill {
     height: 100%;
     background-color: var(--bar-fill);
@@ -906,7 +905,7 @@ input:checked + .slider:before {
     transition: width 0.3s ease;
 }
 
-/* Текст с процентом — чуть меньше и тоже адаптивно */
+
 .mood-percentage {
     max-width: 600px;
     width: 90vw;
@@ -958,39 +957,38 @@ input:checked + .slider:before {
     color: #fff;
 }
 .day .day-number {
-    font-size: 1.8rem !important; /* было 1.4rem или 1.6rem */
+    font-size: 1.8rem !important;
     font-weight: 700;
 }
-/* Кнопки эмоций в форме */
+
 .mood-form .emoji-buttons button {
-    font-size: 32px !important;  /* с 28px до 32px */
+    font-size: 32px !important;  
     padding: 18px !important;
     margin: 0 6px !important;
     border-radius: 10px !important;
 }
 
-/* Кнопки комментариев */
+
 .comment-buttons button {
-    font-size: 18px !important;  /* с 16px до 18px */
+    font-size: 18px !important;  
     padding: 14px 20px !important;
     border-radius: 10px !important;
 }
 
-/* Кнопка очистки */
 #clearAllBtn {
-    font-size: 22px !important;   /* с 20px до 22px */
+    font-size: 22px !important;   
     padding: 9px 18px !important;
     border-radius: 12px !important;
 }
 
-/* Навигационные кнопки (месяц вперед/назад) */
+
 .month-navigation button {
-    font-size: 18px !important; /* с 16px до 18px */
+    font-size: 18px !important; 
     padding: 12px 20px !important;
     border-radius: 10px !important;
 }
 #menuToggle {
-    font-size: 40px !important; /* с 24px или 36px до 40px */
+    font-size: 40px !important; 
     top: 12px !important;
     left: 12px !important;
     padding: 8px !important;
@@ -1031,7 +1029,7 @@ input:checked + .slider:before {
 }
 .theme-toggle {
     margin-left: auto;
-    margin-right: 10px; /* можешь увеличить, если нужно больше сдвинуть */
+    margin-right: 10px; 
 
 }
 
@@ -1085,22 +1083,22 @@ input:checked + .slider:before {
     color: var(--text);
 }
 
-/* Стили для меню гамбургер */
+
 #menuToggle {
     cursor: pointer;
     font-size: 24px;
-    position: absolute; /* изменено с fixed */
+    position: absolute; 
     top: 10px;
     left: 10px;
-    z-index: 10; /* уменьшено */
+    z-index: 10; 
     user-select: none;
     color: var(--text);
 }
 
 #menuPanel {
     display: none;
-    position: absolute; /* изменено с fixed */
-    top: 65px; /* отступ от кнопки */
+    position: absolute; 
+    top: 65px; 
     left: 10px;
     background: var(--bg);
     border: 1px solid #888;
@@ -1109,7 +1107,7 @@ input:checked + .slider:before {
     max-height: 550px;
     overflow-y: auto;
     padding: 10px;
-    z-index: 9; /* уменьшено */
+    z-index: 9;
     color: var(--text);
 }
 
@@ -1146,7 +1144,7 @@ input:checked + .slider:before {
     list-style: disc;
     padding-left: 20px;
 }
-/* Немного отступов в списках */
+
 #allTimeStatsList p {
     margin: 6px 0;
 }
@@ -1182,7 +1180,7 @@ input:checked + .slider:before {
 
 .slider:before {
   position: absolute;
-  content: "🌙"; /* начальное состояние — тёмная тема */
+  content: "🌙"; 
   height: 20px;
   width: 20px;
   left: 3px;
@@ -1195,7 +1193,7 @@ input:checked + .slider:before {
   transition: 0.4s;
 }
 
-/* когда включена светлая тема — солнце */
+
 [data-theme="light"] .slider:before {
   content: "☀";
 }
@@ -1268,7 +1266,7 @@ input:checked + .slider:before {
   .theme-toggle {
     margin-top: 5px !important;
     margin-bottom: 20px !important;
-    top: 25px;         /* чуть ниже на телефоне */
+    top: 25px;        
     right: 1px;
   }
 
