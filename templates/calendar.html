@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Календарь настроения</title>
+    <title>Mood calendar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -18,34 +18,34 @@
         </div>
 
 
-        <!-- Кнопка гамбургер -->
+        
         <div id="menuToggle">&#9776;</div>
-        <h1>Календарь — <span id="localMonthYear"></span></h1>
+        <h1>Calendar - <span id="localMonthYear"></span></h1>
 
-        <!-- Панель меню -->
+        
         <div id="menuPanel" style="display:none;">
           <div class="tabs">
-            <button class="tabBtn active" data-tab="counts">Количество дней</button>
-            <button class="tabBtn" data-tab="comments">Комментарии</button>
-            <button class="tabBtn" data-tab="allTimeStats">Статистика за всё время</button>
-            <button id="adminPanelBtn" style="display:none;">Админ-панель</button>
+            <button class="tabBtn active" data-tab="counts">Number of days</button>
+            <button class="tabBtn" data-tab="comments">Comments</button>
+            <button class="tabBtn" data-tab="allTimeStats">All-time statistics</button>
+            <button id="adminPanelBtn" style="display:none;">Admin panel</button>
           </div>
 
           <div class="tabContent active" id="counts">
-            <p>Счастливых дней: <span id="countHappy">0</span></p>
-            <p>Нейтральных дней: <span id="countNeutral">0</span></p>
-            <p>Грустных дней: <span id="countSad">0</span></p>
+            <p>Happy days: <span id="countHappy">0</span></p>
+            <p>Neutral days: <span id="countNeutral">0</span></p>
+            <p>Sad days: <span id="countSad">0</span></p>
           </div>
           <div class="tabContent" id="comments" style="max-height: 400px; overflow-y: auto;">
             <ul id="commentsList"></ul>
           </div>
           <div class="tabContent" id="allTimeStats" style="max-height: 400px; overflow-y: auto;">
-            <p>Счастливых дней всего: <span id="allTimeHappy">0</span></p>
-            <p>Нейтральных дней всего: <span id="allTimeNeutral">0</span></p>
-            <p>Грустных дней всего: <span id="allTimeSad">0</span></p>
-            <p>Всего дней с настроением: <span id="allTimeTotal">0</span></p>
+            <p>Happy days in total: <span id="allTimeHappy">0</span></p>
+            <p>Total neutral days: <span id="allTimeNeutral">0</span></p>
+            <p>Total sad days: <span id="allTimeSad">0</span></p>
+            <p>Total days with mood: <span id="allTimeTotal">0</span></p>
             <div id="allTimeCommentsContainer" style="max-height: 200px; overflow-y: auto; margin-top: 10px; border-top: 1px solid #666; padding-top: 8px;">
-              <h4 style="margin: 0 0 6px 0;">Комментарии за всё время:</h4>
+              <h4 style="margin: 0 0 6px 0;">Comments for all time:</h4>
               <ul id="allTimeCommentsList" style="list-style: disc; padding-left: 20px; margin: 0; color: var(--text);"></ul>
             </div>
               <div style="position: relative; height: 250px; margin-top: 20px;">
@@ -56,19 +56,19 @@
         </div>
 
         <div class="month-navigation" style="text-align: center; margin-bottom: 15px;">
-          <button id="prevMonthBtn">← Предыдущий</button>
-          <button id="nextMonthBtn">Следующий →</button>
+          <button id="prevMonthBtn">← Previous</button>
+          <button id="nextMonthBtn">Next →</button>
         </div>
 
         <div class="mood-bar">
             <div id="moodFill" class="mood-fill" style="width: 0%;"></div>
         </div>
-        <p id="moodPercentage" class="mood-percentage">Общее настроение: 0%</p>
+        <p id="moodPercentage" class="mood-percentage">General mood: 0%</p>
 
-        <button id="clearAllBtn" type="button">Отчистить все настроения</button>
+        <button id="clearAllBtn" type="button">Clear all moods</button>
     </header>
     <div class="calendar" id="calendarContainer">
-        <!-- Календарь будет отрисован сюда через JS -->
+        
     </div>
 
 <script>
@@ -78,7 +78,7 @@
 
     let currentYear, currentMonth;
 
-    // Получаем user из Telegram WebApp API
+    // We get user from Telegram WebApp API
     const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
     const userId = user?.id?.toString() || "default_user";
     const username = user?.username ? "@" + user.username : "";
@@ -87,7 +87,7 @@
         const container = document.getElementById('calendarContainer');
         container.innerHTML = '';
 
-        // Обновляем все комментарии за всё время
+        // Update all comments for all time
         const allTimeCommentsList = document.getElementById('allTimeCommentsList');
         allTimeCommentsList.innerHTML = '';
         const allComments = data.all_time_comments || data.comments || [];
@@ -132,16 +132,16 @@
             container.appendChild(dayDiv);
         });
 
-        // Обновляем шкалу
+        // Update the scale
         document.getElementById('moodFill').style.width = data.mood_level + '%';
         document.getElementById('moodPercentage').textContent = 'Общее настроение: ' + data.mood_level + '%';
 
-        // Заголовок месяца
+        // Month title
         document.getElementById('localMonthYear').textContent = `${pad(data.month)}/${data.year}`;
         currentYear = data.year;
         currentMonth = data.month;
 
-        // Статистика по месяцу
+        // Monthly statistics
         let happyCount = 0, neutralCount = 0, sadCount = 0;
         data.days.forEach(day => {
             if (day.mood === 'happy') happyCount++;
@@ -152,7 +152,7 @@
         document.getElementById('countNeutral').textContent = neutralCount;
         document.getElementById('countSad').textContent = sadCount;
 
-        // Комментарии по месяцу
+        // Comments by month
         const commentsList = document.getElementById('commentsList');
         commentsList.innerHTML = '';
         (data.comments || []).forEach(({date, comment}) => {
@@ -163,7 +163,7 @@
             }
         });
 
-        // Статистика за всё время
+        // All-time statistics
         const stats = data.all_time_stats || {};
         document.getElementById('allTimeHappy').textContent = stats.happy || 0;
         document.getElementById('allTimeNeutral').textContent = stats.neutral || 0;
@@ -182,7 +182,7 @@
                     renderCalendar(data);
                 }
             })
-            .catch(() => alert('Ошибка при загрузке данных календаря'));
+            .catch(() => alert('Error loading calendar data'));
     }
 
     function renderMoodChart(stats) {
@@ -194,7 +194,7 @@
         window.moodChartInstance = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['😊 Счастливые', '😐 Нейтральные', '😢 Грустные'],
+                labels: ['😊 Happy', '😐 Mood', '😢 Sad'],
                 datasets: [{
                     data: [stats.happy || 0, stats.neutral || 0, stats.sad || 0],
                     backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c'],
@@ -246,7 +246,7 @@
         const dayDiv = button.closest('.day');
         const comment = dayDiv.querySelector('.comment-input').value;
 
-        showMoodMessage(mood); // ← ВСТАВЬ СЮДА
+        showMoodMessage(mood); 
 
         fetch('/submit_mood', {
             method: 'POST',
@@ -278,8 +278,8 @@
             date: dateStr,
             user_id: userId,
             username: username,
-            comment: comment.trim(),           // всегда отправляем, может быть пустым
-            mood: mood || ''                   // если mood null, отправляем пустую строку
+            comment: comment.trim(),           
+            mood: mood || ''                   
         });
 
         fetch('/submit_mood', {
@@ -291,10 +291,10 @@
             if (res.ok) {
                 fetchCalendar(currentYear, currentMonth);
             } else {
-                alert('Ошибка при сохранении');
+                alert('Error saving');
             }
         })
-        .catch(() => alert('Ошибка сети при сохранении'));
+        .catch(() => alert('Network error while saving'));
     }
 
 
@@ -303,7 +303,7 @@
 
 
     document.getElementById('clearAllBtn').addEventListener('click', () => {
-        if (!confirm('Вы уверены, что хотите очистить все настроения?')) return;
+        if (!confirm('Are you sure you want to clear all moods?')) return;
 
         fetch('/clear_all_moods', {
             method: 'POST',
@@ -314,15 +314,15 @@
         .then(data => {
             if (data.status === 'ok') {
                 fetchCalendar(currentYear, currentMonth);
-                alert('Все настроения успешно очищены!');
+                alert('All moods have been successfully cleared!');
             } else {
-                alert('Ошибка при удалении: ' + (data.message || 'Неизвестно'));
+                alert('Error while deleting: ' + (data.message || 'Unknown'));
             }
         })
-        .catch(() => alert('Ошибка сети при очистке настроений'));
+        .catch(() => alert('Network error while clearing sentiment'));
     });
 
-    // Переключение темы
+    // Switching the theme
     const toggle = document.getElementById('themeSwitch');
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
@@ -337,7 +337,7 @@
         });
     }
 
-    // Меню и вкладки
+    // Menu and tabs
     const menuToggle = document.getElementById('menuToggle');
     const menuPanel = document.getElementById('menuPanel');
     const tabButtons = document.querySelectorAll('.tabBtn');
@@ -356,7 +356,7 @@
         };
     });
 
-    // Инициализация при загрузке
+    // Initialization on boot
     window.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('theme') || 'dark';
         applyTheme(savedTheme);
@@ -379,42 +379,42 @@
 <script>
 const moodMessages = {
     happy: [
-        "Продолжай в том же духе! 💪",
-        "Ты сегодня сияешь — не сбавляй темп! ✨",
-        "Так держать! Пусть таких дней будет больше! 🌈",
-        "Ты заряжаешь позитивом — вперёд к новым победам! 🚀",
-        "Настроение на высоте — удержи эту волну! 🔥",
-        "Ты светишься изнутри — не забывай, как это важно! ☀️",
-        "Счастье — в простом. Лови каждый момент! 🦋",
-        "Ты на правильном пути. Не останавливайся! 🛤️",
-        "Этот день запомнится. Сделай его особенным! 🎉",
-        "Ты — источник вдохновения для себя и других! 🌟"
+    "Keep up the good work! 💪",
+    "You're shining today – keep up the good work! ✨",
+    "Keep it up! May there be more days like this! 🌈",
+    "You're charging me with positivity – onward to new victories! 🚀",
+    "You're in high spirits – keep it up! 🔥",
+    "You glow from within – don't forget how important that is! ☀️",
+    "Happiness is in the simple things. Seize every moment! 🦋",
+    "You're on the right path. Don't stop! 🛤️",
+    "This day will be memorable. Make it special! 🎉",
+    "You're an inspiration to yourself and others! 🌟"
     ],
-
+    
     neutral: [
-        "Нейтральный день — уже неплохо. Завтра может стать лучше! 🌤️",
-        "Иногда и такие дни полезны — не дави на себя. 💆‍♂️",
-        "Баланс — тоже важен. Ты молодец, что следишь за собой. ⚖️",
-        "Немного спокойствия — хороший знак. Главное — идти вперёд. 🛤️",
-        "Не забывай заботиться о себе, даже в серые дни. 🌱",
-        "Сегодня спокойно? Это тоже ценно. Вдохни глубже. 🍃",
-        "Ты держишься — это уже победа. Продолжай. 🎯",
-        "Иногда нужно просто побыть. Дай себе паузу. ☕",
-        "Все дни важны — и спокойные в том числе. 📅",
-        "Ты на своём пути. Даже если шаг маленький — он вперёд. 👣"
+    "A neutral day isn't bad. Tomorrow can be better! 🌤️",
+    "Sometimes even these days are good – don't put pressure on yourself. 💆‍♂️",
+    "Balance is also important. You're doing great for taking care of yourself. ⚖️",
+    "A little calm is a good sign. The main thing is to move forward. 🛤️",
+    "Don't forget to take care of yourself, even on dull days. 🌱",
+    "Feeling calm today? That's valuable too. Take a deep breath. 🍃",
+    "You're holding on – that's already a victory. Keep going. 🎯",
+    "Sometimes you just need to be alone. Give yourself a break. ☕",
+    "All days are important – even the calm ones. 📅",
+    "You're on your way. Even a small step is forward. 👣"
     ],
-
+    
     sad: [
-        "Плохие дни бывают у всех. Ты не один. 💛",
-        "Сегодня может быть тяжело, но это пройдёт. 🌧️➡️☀️",
-        "Ты уже сделал шаг — ты это отметил. Это важно. 💪",
-        "Сделай для себя что-то доброе — ты этого заслуживаешь. ☕📖",
-        "Помни: даже самый долгий шторм заканчивается. 🌈",
-        "Ты не обязан быть сильным каждый день. Отдохни. 🤲",
-        "Твоя уязвимость — это не слабость. Это часть тебя. 💧",
-        "Ты замечен. Ты важен. Ты есть. И это уже много. ❤️",
-        "Даже в темноте может появиться свет. Он рядом. 🕯️",
-        "Смотри на себя с добротой. Ты заслуживаешь поддержки. 🤍"
+    "We all have bad days. You're not alone. 💛",
+    "Today may be hard, but it will pass. 🌧️➡️☀️",
+    "You've already taken a step—you've celebrated it. That's important. 💪",
+    "Do something kind for yourself—you deserve it. ☕📖",
+    "Remember: even the longest storm ends. 🌈",
+    "You don't have to be strong every day. Take a break. 🤲",
+    "Your vulnerability isn't a weakness. It's a part of you. 💧",
+    "You're noticed. You're important. You exist. And that's already a lot. ❤️",
+    "Even in the darkness, light can appear. It's near. 🕯️",
+    "Look at yourself with kindness. You deserve support. 🤍"
     ]
 
 };
@@ -433,17 +433,15 @@ function showMoodMessage(mood) {
     <br>
   <button id="donateBtn" style="margin-top: 8px;">💖 Поддержать автора</button>
 </footer>
-<!-- Модальное окно -->
+
 <div id="donationModal" class="modal">
   <div class="modal-content">
     <span class="close" id="closeModal">&times;</span>
     <h2>Поддержать автора</h2>
     <ul>
-      <li>💖 <a href="https://www.donationalerts.com/r/kirillkkaaaaaa" target="_blank">DonationAlerts</a></li>
-      <li>💳 Перевод на карту Сбер: <b>4276 3802 0793 3495</b></li>
-        💳 Перевод на карту ВТБ: <b>2200 2414 1308 1591</b>
+      <li>💖 <a href="https://www.donationalerts.com/r/americanooo" target="_blank">DonationAlerts</a></li>
     </ul>
-    <p style="margin-top: 10px;">Спасибо за поддержку! ❤️</p>
+    <p style="margin-top: 10px;">Thanks for support! ❤️</p>
   </div>
 </div>
 <script>
