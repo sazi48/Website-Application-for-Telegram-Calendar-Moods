@@ -2,9 +2,9 @@ import os
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, BotCommand
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Укажи токен своего бота
-BOT_TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"  # ← замени на свой токен
-WEBAPP_URL = "https://calendar-nr7j.onrender.com"  # ← замени на ссылку на свой сайт (мини-приложение)
+# Enter your bot's token
+BOT_TOKEN = "******"  
+WEBAPP_URL = "*****"  # ← replace with a link to your website (mini-app)
 
 # /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -13,23 +13,23 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        "Привет! 👋 Это твой календарь настроения.\nНажми кнопку ниже, чтобы начать:",
+        "Hi! 👋 This is your mood calendar. Click the button below to get started:",
         reply_markup=reply_markup
     )
 
 # /help
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "🧠 Этот бот помогает отслеживать настроение.\n"
-        "🗓 Нажми кнопку /start, чтобы открыть календарь.\n"
-        "📊 Следи за статистикой и записывай комментарии к каждому дню!"
+        "🧠 This bot helps you track your mood.\n"
+        "🗓 Press the /start button to open the calendar.\n"
+        "📊 Track your stats and write comments for each day!"
     )
 
-# Основной запуск
+# Main launch
 async def setup_bot_commands(application):
     await application.bot.set_my_commands([
-        BotCommand("start", "Запустить бота"),
-        BotCommand("help", "Помощь по функциям")
+        BotCommand("start", "Launch the bot"),
+        BotCommand("help", "Help with functions")
     ])
 
 if __name__ == '__main__':
@@ -40,5 +40,5 @@ if __name__ == '__main__':
 
     app.post_init = setup_bot_commands
 
-    print("✅ Бот запущен.")
+    print("✅ Bot starts.")
     app.run_polling()
