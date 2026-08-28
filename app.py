@@ -7,17 +7,17 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import Updater, CommandHandler
 import os
 
-TOKEN = "7666621990:AAGxkqd-rMSjzMeEZgCLm_iPU__fBSFf_DE"
-ADMIN_USER_ID = "870004624"  # строкой, чтобы совпадало с JS userId
+TOKEN = "*****"
+ADMIN_USER_ID = "*********"  
 
 def start(update, context):
     keyboard = [
         [InlineKeyboardButton(
-            "Открыть Календарь настроения",
-            web_app=WebAppInfo(url="https://calendar-nr7j.onrender.com"))]
+            "Open the Mood Calendar",
+            web_app=WebAppInfo(url="*****"))] #Enter the link to the calendar you posted on the website.
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Привет! Нажми кнопку, чтобы открыть мини-приложение:', reply_markup=reply_markup)
+    update.message.reply_text('Hi! Click the button to open the widget:', reply_markup=reply_markup)
 
 def main():
     updater = Updater(TOKEN)
@@ -44,7 +44,7 @@ def get_all_time_stats(user_id):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Получаем последние записи настроения (по id) для каждой даты, исключая deleted
+    
     cursor.execute("""
         SELECT m.mood FROM moods m
         INNER JOIN (
@@ -93,12 +93,12 @@ def index():
 @app.route('/submit_mood', methods=['POST'])
 def submit_mood():
     user_id = request.form.get("user_id", "default_user")
-    username = request.form.get("username", "")  # Получаем username
+    username = request.form.get("username", "")  
     date = request.form['date']
-    mood = request.form.get('mood', '')  # get с дефолтом пустая строка
-    comment = request.form.get('comment', '')  # get с дефолтом пустая строка
+    mood = request.form.get('mood', '') 
+    comment = request.form.get('comment', '')  
 
-    # Если mood не входит в список допустимых — делаем пустой (для безопасности)
+   
     if mood not in ('happy', 'neutral', 'sad'):
         mood = ''
 
@@ -168,7 +168,7 @@ def get_calendar_data():
     year = request.args.get('year', type=int)
     month = request.args.get('month', type=int)
     if not year or not month:
-        return jsonify({"error": "year и month обязательны"}), 400
+        return jsonify({"error": "year и month mandatory"}), 400
 
     moods = get_month_moods(user_id, year, month)
     days_in_month = calendar.monthrange(year, month)[1]
